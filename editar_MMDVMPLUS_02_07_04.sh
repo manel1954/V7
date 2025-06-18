@@ -590,23 +590,23 @@ done;;
 13) echo ""
 while true
 do
-    # Buscar el valor actual de RemotePort en la sección [DMR Network]
-    remoteport=$(awk '
+    # Buscar el valor actual de RemoteAddress en la sección [DMR Network]
+    remoteaddress=$(awk '
     /^\[DMR Network\]/ {in_section=1; next}
     /^\[/ {in_section=0}
-    in_section && /^RemotePort=/ {
+    in_section && /^RemoteAddress=/ {
         split($0, a, "=")
         print a[2]
         exit
     }' /home/pi/MMDVMHost/$DIRECTORIO)
 
-    echo "   Valor actual de RemotePort: ${AMARILLO}${remoteport}\33[1;37m"
+    echo "   Valor actual de RemoteAddress: ${AMARILLO}${remoteaddress}\33[1;37m"
 
-    read -p 'Introduce nuevo valor para RemotePort (ENTER para mantener el actual): ' nuevo_port
+    read -p 'Introduce nuevo valor para RemoteAddress (ENTER para mantener el actual): ' nuevo_address
 
     # Si no se introduce nada, se mantiene el actual
-    if [ -z "$nuevo_port" ]; then
-        echo "   No se ha modificado RemotePort."
+    if [ -z "$nuevo_address" ]; then
+        echo "   No se ha modificado RemoteAddress."
         break
     fi
 
@@ -614,9 +614,9 @@ do
     nuevo_port=$(echo "$nuevo_port" | tr -d '[[:space:]]')
 
     # Actualizar el valor en el archivo
-    sed -i "/^\[DMR Network\]/,/^\[/ s/^RemotePort=.*/RemotePort=$nuevo_port/" /home/pi/MMDVMHost/$DIRECTORIO
+    sed -i "/^\[DMR Network\]/,/^\[/ s/^RemoteAddress=.*/RemoteAddress=$nuevo_address/" /home/pi/MMDVMHost/$DIRECTORIO
 
-    echo "   RemotePort actualizado a: ${AMARILLO}$nuevo_port\33[1;37m"
+    echo "   RemoteAddress actualizado a: ${AMARILLO}$nuevo_address\33[1;37m"
     break
 done;;
 
