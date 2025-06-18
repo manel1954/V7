@@ -641,9 +641,10 @@ done;;
     else
         echo -e "\n${AMARILLO}No se realizaron cambios.${BLANCO}"
     fi
-    ;;
+    #;;
 
-
+esac
+done;;
 14) echo ""
 while true
 do
