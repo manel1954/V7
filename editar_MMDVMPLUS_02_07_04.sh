@@ -127,7 +127,7 @@ idd1=`expr substr $idd 3 30`
 echo "$idd1"
 
 echo -n "${CIAN}  11)${GRIS} Modificar Address     - ${AMARILLO}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO`
+master=`grep -n -m 1 "^RemoteAddress=" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
 largo=`expr index $master $buscar`
 largo=`expr $largo + 1`
