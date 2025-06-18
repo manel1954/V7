@@ -355,13 +355,8 @@ numero_linea_jiter_letrac=$numero_linea$letrac
 echo "  ${CIAN}      k) ${GRIS}Jitter      - ${AMARILLO}$Jitter"
 
 echo -n "${CIAN}  27)${GRIS} Entra reflector DMR+  - ${AMARILLO}"
-OPCION=`expr substr $pas 1 $largo1`
-OPCION=`expr $OPCION + 1`
-linea33port=$OPCION
-letra=p
-linea22port=$OPCION$letra
-var300port= sed -n $linea22port  /home/pi/MMDVMHost/$DIRECTORIO;
-
+var300port= sed -n '238p'  /home/pi/MMDVMHost/$DIRECTORIO;
+echo "$var300port"
 echo ""
 echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cambio${AMARILLO}"
 
