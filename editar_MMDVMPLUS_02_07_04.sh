@@ -172,14 +172,6 @@ letra=c
 linea_master=$largo$letra
 echo "$master1"
 
-echo -n "${CIAN}  12)${GRIS} Modificar Puerto      - ${AMARILLO}"
-lineaport=`expr substr $master 1 $largo1`
-lineaport=`expr $lineaport + 1`
-linea3port=$lineaport
-letra=p
-linea2port=$lineaport$letra
-var100port= sed -n $linea2port  /home/pi/MMDVMHost/$DIRECTORIO;
-
 remoteport=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
 /^\[/ {in_section=0}
