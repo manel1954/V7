@@ -12,7 +12,7 @@ GRIS="\033[0m"
 echo "${VERDE}"
 echo "   ********************************************************************"
 echo "   *      Script para hacer actualizaciones y varios \33[1;33m       \33[1;32m          *"
-echo "   *                          \33[1;31mby EA3EIZ\33[1;32m                               *"
+echo "   *                          \33[1;31mby manel1954\33[1;32m                               *"
 echo "   ********************************************************************"
 echo "\33[1;36m   1)\33[1;37m Actualizar imagen"
 echo "\33[1;36m   2)${AMARILLO} Actualizar ${AMARILLO}YSF,${AMARILLO} YSF2DMR, DMR2YSF, DMR2NXDN y NXDNClients"
@@ -62,7 +62,7 @@ clear
 
                         sudo rm -R  /home/pi/AUTOARRANQUEV7
                         cd /home/pi/
-                        git clone http://github.com/ea3eiz/AUTOARRANQUEV7
+                        git clone http://github.com/manel1954/AUTOARRANQUEV7
                         sleep 1
 
                         # copia prueba.sh en /home/pi
@@ -332,42 +332,7 @@ exit;
 break;;
 esac
 done;;
-10a) echo ""
-while true
-do
-clear
-                                ejecutar1=S
-                                case $ejecutar1 in
-                                [sS]* ) echo ""
 
-echo "${ROJO}"
-echo "   *********************************************************"
-echo "   * ATENCIÒN!!! Si estás utilizando la Raspberry pi 3 B+  *"
-echo "   * Dicha máquina tiene los puertos USB de alta velocidad *"
-echo "   * por lo que tendrás que utilizar un ladrón de USB      *"
-echo "   * para poder rebajar la velocidad de los puertos USB    *"
-echo "   * y así poder grabar los pinchos sin ningun problema    *"
-echo "   *********************************************************"
-echo "${VERDE}"
-
-echo "${AMARILLO}"
-echo "   *********************************************************************"
-echo "   * Haz clik en el icono donde tengas conectado el pincho             *"
-echo "   * una vez se abra la consola mostrando que se conectó correctamente *"
-echo "   * cierra dicha consola y utiliza el MENÚ que te aparecerá           *"
-echo "   *********************************************************************"
-echo "${VERDE}"
-echo -n "    Pulsa una tecla para seguir "
-read a
-                                sh flash_mmdvm_hs_gpio.sh
-                                echo ""
-                                break;;
-                                [nN]* ) echo ""
-clear
-exit;
-break;;
-esac
-done;;
 11) echo ""
 while true
 do
@@ -414,150 +379,7 @@ echo ""
                         break;;
 esac
 done;;
-iconosbloqueados) echo ""
-while true
-do
-clear
-                        echo "\33[1;31m" #color rojo
-                        echo " *****************************************************"
-                        echo " ******   OJO!!! CLONA TODOS LOS ICONOS         ******"
-                        echo " *****************************************************"
-                        echo "\33[1;37m" #color
-                        read -p 'Quieres Actualizar? S/N ' ejecutar1
-                        case $ejecutar1 in
-                        [sS]* ) echo ""
-                        echo ">>>>>>>>> RESTAURANDO ICONOS >>>>>>>>"
-                        sudo rm -R /home/pi/$SCRIPTS_version
-                        sleep 2
-                        cd /home/pi
-                        git clone https://github.com/ea3eiz/$SCRIPTS_version
-                        cp -R /home/pi/$SCRIPTS_version/Desktop /home/pi/
-                        clear
-                        exit;
-                        break;;
-                        [nN]* ) echo ""
-clear
-exit;
-break;;
-esac
-done;;
-9000) echo ""
-while true
-do
-clear
-                        ejecutar1=S
-                        case $ejecutar1 in
-                        [sS]* ) echo ""
-                        echo " *****************************************************"
-                        echo " ******   OJO!!! CLONA TODOS LOS ICONOS         ******"
-                        echo " *****************************************************"
-                        sudo rm -R /home/pi/$SCRIPTS_version
-                        cd /home/pi
-                        git clone https://github.com/ea3eiz/$SCRIPTS_version
-                        cp -R /home/pi/$SCRIPTS_version/Desktop /home/pi/
-                        exit;
-                        break;;
-                        [nN]* ) echo ""
-clear
-exit;
-break;;
-esac
-done;;
-9001) echo ""
-while true
-do
-clear
 
-                        ejecutar1=S
-                        case $ejecutar1 in
-                        [sS]* ) echo ""
-                        echo ">>>>>>>>> RECOGE AUTOARRANQUES_V6 >>>>>>>>"
-                        cd /home/pi
-                        sudo rm -R /home/pi/AUTOARRANQUE_V6
-                        git clone http://github.com/ea3eiz/AUTOARRANQUE_V6
-                        exit;
-                        break;;
-                        [nN]* ) echo ""
-                        clear
-                        exit;
-                        break;;
-esac
-done;;
-9002) echo ""
-while true
-do
-clear
- 
-                        ejecutar1=S
-                        case $ejecutar1 in
-                        [sS]* ) echo ""
-                        echo ">>>>>>>>> ACTUALIZAR FIRMWARE MMDVM_HS"
-                        cd /home/pi/$SCRIPTS_version
-                        sudo sh flash_mmdvm_hs.sh
-                        exit;
-                        break;;
-                        [nN]* ) echo ""
-                        clear
-                        exit;
-                        break;;
-esac
-done;;
-pi-star) echo ""
-while true
-do
-clear                     
-                        instalarsi=S
-                        case $instalarsi in
-                        [sS]* ) echo ""
-                        clear
-                        cd /home/pi/$SCRIPTS_version/
-                        sudo sh flash_zumspot.sh                  
-                        break;;
-                        [nN]* ) echo ""
-                        clear
-                        exit;
-                        break;;
-esac
-done;;
-nextion) echo ""
-while true
-do
-clear                     
-                        instalarsi=S
-                        case $instalarsi in
-                        [sS]* ) echo ""
-                        clear
-                        cd /home/pi/
-                        git clone https://github.com/on7lds/NextionDriver
-                        cd NextionDriver
-                        make 
-                        echo "se instaló NextionDriver con exito"
-                        sleep 3 
-                        sudo cp /home/pi/V7/nextiondriver.desktop /home/pi/.config/autostart/             
-                        break;;
-                        [nN]* ) echo ""
-                        clear
-                        exit;
-                        break;;
-esac
-done;;
-a) echo ""
-while true
-do
-clear                     
-                        instalarsi=S
-                        case $instalarsi in
-                        [sS]* ) echo ""
-                        clear
-                        cd /home/pi/$SCRIPTS_version/
-                        sudo sh flash_mmdvm_hs_gpio.sh                  
-                        break;;
-                        [nN]* ) echo ""
-                        clear
-                        exit;
-                        break;;
-esac
-done;;
 0) echo ""
 clear
 echo "\33[1;33m   ******************************"
