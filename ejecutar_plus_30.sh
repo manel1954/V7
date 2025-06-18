@@ -1,5 +1,5 @@
 #!/bin/bash
-mode=`grep -n -m 1 "^Port=" /home/pi/MMDVMHost/MMDVMPLUS.ini`
+mode=`grep -n -m 1 "^RemotePort=" /home/pi/MMDVMHost/MMDVMPLUS.ini`
 buscar=":"
 caracteres=`expr index $mode $buscar`
 caracteres_linea=`expr $caracteres - 1`
