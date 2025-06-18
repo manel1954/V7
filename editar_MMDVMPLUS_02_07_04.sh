@@ -110,7 +110,7 @@ echo "${CIAN}   8)${GRIS} Puerto para placa NTH/ZUM en arduino y Pincho Low Cost
 echo "${CIAN}   9)${GRIS} Puerto para DVMEGA + Bluestack conectado por USB a Raspberry Pi(ttyUSB0)${AMARILLO}"
 echo -n "                            - "
 
-remoteport=$(awk '
+uartport=$(awk '
 /^\[Modem\]/ {in_section=1; next}
 /^\[/ {in_section=0}
 in_section && /^UartPort=/ {
@@ -118,7 +118,7 @@ in_section && /^UartPort=/ {
     print a[2]
     exit
 }' /home/pi/MMDVMHost/$DIRECTORIO)
-echo -n "${CIAN}  9)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteport}\33[1;37m"
+echo -n "${CIAN} ${GRIS} Valor UartPort      - ${AMARILLO}${uartport}\33[1;37m"
 echo ""
 
 echo -n "${CIAN}  10)${GRIS} Modificar ID          - ${AMARILLO}"
