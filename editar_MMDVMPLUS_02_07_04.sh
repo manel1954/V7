@@ -126,8 +126,6 @@ idd=`grep -n "Id=" /home/pi/MMDVMHost/$DIRECTORIO`
 idd1=`expr substr $idd 3 30`
 echo "$idd1"
 
-RemoteAddress
-
 remoteaddress=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
 /^\[/ {in_section=0}
