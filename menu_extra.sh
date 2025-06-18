@@ -380,6 +380,25 @@ echo ""
 esac
 done;;
 
+
+1000) echo ""
+while true
+do
+clear
+                        ejecutar1=S
+                        case $ejecutar1 in
+                        [sS]* ) echo ""
+                        clear 
+                        sudo cp /home/pi/V7/Desktop/*.*  /home/pi/Desktop/                                                             
+                        exit;
+                        break;;
+                        [nN]* ) echo ""
+                        clear
+                        exit;
+                        break;;
+esac
+done;;
+
 0) echo ""
 clear
 echo "\33[1;33m   ******************************"
