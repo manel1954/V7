@@ -14,17 +14,7 @@ echo "${VERDE}"
 
 
 echo "${VERDE}\v\v"
-echo "   *********************************************************************"
-echo ""
-echo "${AMARILLO}                           Actualizar MMDVMHost "
-echo " "
-echo "${BLANCO}                       DESHABILITADO TEMPORALMENTE "
-echo "${VERDE}"
-echo "   *********************************************************************"
-echo ""
-echo -n "${CIAN}  Pulsa enter para cerrar esta ventana: "
-read a
-exit;
+
 
 
 
