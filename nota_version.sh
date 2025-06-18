@@ -1,6 +1,6 @@
 #!/bin/bash
 SCRIPTS_version=$(awk "NR==1" /home/pi/.config/autostart/version)
-NUMERO_VERSION=`expr substr $SCRIPTS_version 2 1`
+#NUMERO_VERSION=`expr substr $SCRIPTS_version 2 1`
 ROJO="\033[1;31m"
 VERDE="\033[1;32m"
 BLANCO="\033[1;37m"
@@ -10,7 +10,7 @@ GRIS="\033[0m"
 echo "${VERDE}"
 echo "   ************************************************************************************"
 echo -n "${CIAN}"
-echo "                             NOTAS DE LA VERSIÓN $NUMERO_VERSION"
+echo "                             NOTAS DE LA VERSIÓN $SCRIPTS_version"
 echo -n "${VERDE}"                                                                                 
 echo "   ************************************************************************************"
 #echo "\33[1;36m   Gracias por descargar la imagen de ADER V.02.07.0$NUMERO_VERSION"
