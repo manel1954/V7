@@ -17,7 +17,7 @@ echo "   ***********************************************************************
 echo ""
 echo "\33[1;32m   Imagen multi plataforma para \33[1;33mRADIO AFICIONADOS."
 echo "\33[1;32m"
-echo "   Imagen Linux basada en Debian Stretch, creada por: EA3EIZ & EA3EG."
+echo "   Imagen Linux basada en Debian Stretch, creada por: EA3EIZ"
 echo ""
 echo "\33[1;33m   - Utilizar adecuadamente los puertos de los correspondientes Módems."
 echo ""
