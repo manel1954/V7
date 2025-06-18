@@ -53,7 +53,7 @@ clear
 
                     HOY=$(date +%Y%m%d)
                     FIJA="const char* VERSION = "\"
-                    PI="ADER7"\"
+                    PI="V7"\"
                     HOY1=$HOY$PI
                     PUNTO=";"   
                     
