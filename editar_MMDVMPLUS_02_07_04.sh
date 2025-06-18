@@ -534,7 +534,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c Port=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -547,7 +547,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c Port=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -560,7 +560,7 @@ actualizar=S
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c Port=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -573,7 +573,7 @@ actualizar=S
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c Port=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
