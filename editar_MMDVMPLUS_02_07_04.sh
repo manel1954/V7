@@ -113,12 +113,12 @@ echo -n "                            - "
 uartport=$(awk '
 /^\[Modem\]/ {in_section=1; next}
 /^\[/ {in_section=0}
-in_section && /^UartPort=/ {
+in_section && /^UARTPort=/ {
     split($0, a, "=")
     print a[2]
     exit
 }' /home/pi/MMDVMHost/$DIRECTORIO)
-echo -n "${CIAN} ${GRIS} Valor UartPort      - ${AMARILLO}${uartport}\33[1;37m"
+echo -n "${uartport}\33[1;37m"
 echo ""
 
 echo -n "${CIAN}  10)${GRIS} Modificar ID          - ${AMARILLO}"
