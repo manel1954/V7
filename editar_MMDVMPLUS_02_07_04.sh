@@ -534,8 +534,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c Port=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -548,8 +547,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c Port=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -558,12 +556,11 @@ done;;
 8) echo ""
 while true
 do
-                          actualizar=S 
+actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c Port=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -572,13 +569,11 @@ done;;
 9) echo ""
 while true
 do
-                     
-                          actualizar=S 
+actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c Port=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -1207,12 +1202,12 @@ do
 			                    [sS]* ) echo ""
 			                    read -p 'Intruduce reflector DMR+ al que se conectara (ej:4370) ' opcion
                           letra1=c
-                          linea4=$linea33port$letra1
+                          linea4=$linea238port$letra1
                           sed -i "$linea4 Options=StartRef=$opcion;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    letra1=c
-                          linea4=$linea33port$letra1
+                          linea4=$linea238port$letra1
 			                    sed -i "$linea4 #Options=StartRef=4370;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 esac
