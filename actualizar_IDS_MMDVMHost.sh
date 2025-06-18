@@ -1,6 +1,6 @@
 ﻿#!/bin/bash
 clear
-echo "\33[1;32m ACTUALIZANDO IDS INDICATIVOS >>>>>"
+echo "\33[1;32m ACTUALIZANDO IDS INDICATIVOS adadadadad >>>>>"
 sleep 10
 
 #var=`grep -n -m 1 '\<DMRIDPATH\>' /home/pi/MMDVMHost/linux/DMRIDUpdate.sh`
