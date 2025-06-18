@@ -1162,9 +1162,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
 			                    read -p 'Intruduce reflector DMR+ al que se conectara (ej:4370) ' opcion
-                          letra1=c
-                          linea4=$linea238port$letra1
-                          sed -i "$linea4 Options=StartRef=$opcion;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "238c Options=StartRef=$opcion;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    letra1=c
