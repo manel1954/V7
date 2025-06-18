@@ -2,43 +2,6 @@
 while true
 do
 clear
-  #Editor MMDVM.ini
-#DIRECTORIO="MMDVM.ini"
-#DIRECTORIO_copia="MMDVM.ini_copia"
-#DIRECTORIO_copia2="MMDVM.ini_copia2"
-#DIRECTORIO_copia3="MMDVM.ini_copia3"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para leer desde el panel de control
-#primero="6c"
-#segundo="7c"
-#tercero="8c"
-#cuarto="9c"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer="37c"
-#segun="38c"
-#tercer="39c"
-  #Lee los datos del fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer1="37c"
-#segun1="38c"
-#tercer1="39c"
-
-  #Editor MMDVMBM.ini
-#DIRECTORIO="MMDVMBM.ini"
-#DIRECTORIO_copia="MMDVMBM.ini_copia"
-#DIRECTORIO_copia2="MMDVMBM.ini_copia2"
-#DIRECTORIO_copia3="MMDVMBM.ini_copia3"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para leer desde el panel de control
-#primero="1c"
-#segundo="2c"
-#tercero="3c"
-#cuarto="4c"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer="34c"
-#segun="35c"
-#tercer="36c"
-  #Lee los datos del fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer1="34c"
-#segun1="35c"
-#tercer1="36c"
 
   #Editor MMDVMPLUS.ini
 DIRECTORIO="MMDVMPLUS.ini"
@@ -649,39 +612,37 @@ done;;
     archivo="/home/pi/MMDVMHost/$DIRECTORIO"
     seccion="DMR Network"
 
-    # Obtener la línea del Password dentro de la sección
-    pas=$(awk -v sec="[$seccion]" '
-        $0 == sec {found=1; next}
-        /^\[.*\]/ {found=0}
-        found && /^Password=/ {print; exit}
-    ' "$archivo")
-
-    linea=$(awk -v sec="[$seccion]" '
-        $0 == sec {found=1; next}
-        /^\[.*\]/ {found=0}
-        found && /^Password=/ {print NR; exit}
-    ' "$archivo")
-
+    # Obtener línea y valor actual de RemotePort dentro de la sección
     remoteport=$(awk -v sec="[$seccion]" '
         $0 == sec {found=1; next}
         /^\[.*\]/ {found=0}
         found && /^RemotePort=/ {print; exit}
     ' "$archivo")
+    linea_port=$(awk -v sec="[$seccion]" '
+        $0 == sec {found=1; next}
+        /^\[.*\]/ {found=0}
+        found && /^RemotePort=/ {print NR; exit}
+    ' "$archivo")
 
-    echo -e "   Valor actual del Password: ${AMARILLO}${pas#*=}\33[1;37m"
-    echo -e "   Puerto actual (RemotePort): ${AMARILLO}${remoteport#*=}\33[1;37m"
+    # Mostrar valor actual
+    echo -e "   Valor actual del RemotePort:  ${AMARILLO}${remoteport#*=}\33[1;37m"
     echo ""
 
-    read -p 'Brandmeister=passw0rd   DMR+=PASSWORD: ' pas1
-    pas1=$(echo "$pas1" | tr -d '[:space:]')
+    # Solicitar nuevo valor
+    read -p 'Nuevo RemotePort (ENTER para mantener): ' nuevo_port
 
-    if [ -n "$pas1" ] && [ -n "$linea" ]; then
-        sed -i "${linea}s|^Password=.*|Password=$pas1|" "$archivo"
-        echo -e "\n${VERDE}Password actualizado correctamente.${BLANCO}"
+    # Limpiar espacios
+    nuevo_port=$(echo "$nuevo_port" | tr -d '[:space:]')
+
+    # Actualizar RemotePort si se ingresó algo
+    if [ -n "$nuevo_port" ] && [ -n "$linea_port" ]; then
+        sed -i "${linea_port}s|^RemotePort=.*|RemotePort=$nuevo_port|" "$archivo"
+        echo -e "\n${VERDE}RemotePort actualizado correctamente.${BLANCO}"
     else
-        echo -e "\n${ROJO}No se pudo actualizar el Password.${BLANCO}"
+        echo -e "\n${AMARILLO}No se realizaron cambios.${BLANCO}"
     fi
     ;;
+
 
 14) echo ""
 while true
