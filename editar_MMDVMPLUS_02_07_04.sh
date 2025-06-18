@@ -646,30 +646,43 @@ do
 esac
 done;;
 13) echo ""
-while true
-do
-                          buscar=":"
-                          largo=`expr index $pas $buscar`
-                          echo "   Valor actual del Password: ${AMARILLO}${pas#*=}\33[1;37m"
-           	              read -p 'Brandmeister=passw0rd   DMR+=PASSWORD: ' pas1
-                          letra=c
-                          if [ $largo = 3 ]
-                          then
-                          linea=`expr substr $pas 1 2`
-                          else
-                          linea=`expr substr $pas 1 3`
-                          fi
-                          linea=$linea$letra
-                          actualizar=S 
-                          case $actualizar in
-			                    [sS]* ) echo ""
-			                    pas1=`echo "$pas1" | tr -d '[[:space:]]'`
-                          sed -i "$linea Password=$pas1" /home/pi/MMDVMHost/$DIRECTORIO
-			                    break;;
-			                    [nN]* ) echo ""
-			                    break;;
-esac
-done;;
+    archivo="/home/pi/MMDVMHost/$DIRECTORIO"
+    seccion="DMR Network"
+
+    # Obtener la línea del Password dentro de la sección
+    pas=$(awk -v sec="[$seccion]" '
+        $0 == sec {found=1; next}
+        /^\[.*\]/ {found=0}
+        found && /^Password=/ {print; exit}
+    ' "$archivo")
+
+    linea=$(awk -v sec="[$seccion]" '
+        $0 == sec {found=1; next}
+        /^\[.*\]/ {found=0}
+        found && /^Password=/ {print NR; exit}
+    ' "$archivo")
+
+    remoteport=$(awk -v sec="[$seccion]" '
+        $0 == sec {found=1; next}
+        /^\[.*\]/ {found=0}
+        found && /^RemotePort=/ {print; exit}
+    ' "$archivo")
+
+    echo -e "   Valor actual del Password: ${AMARILLO}${pas#*=}\33[1;37m"
+    echo -e "   Puerto actual (RemotePort): ${AMARILLO}${remoteport#*=}\33[1;37m"
+    echo ""
+
+    read -p 'Brandmeister=passw0rd   DMR+=PASSWORD: ' pas1
+    pas1=$(echo "$pas1" | tr -d '[:space:]')
+
+    if [ -n "$pas1" ] && [ -n "$linea" ]; then
+        sed -i "${linea}s|^Password=.*|Password=$pas1|" "$archivo"
+        echo -e "\n${VERDE}Password actualizado correctamente.${BLANCO}"
+    else
+        echo -e "\n${ROJO}No se pudo actualizar el Password.${BLANCO}"
+    fi
+    ;;
+
 14) echo ""
 while true
 do
