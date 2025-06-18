@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c "cd /home/pi/V7;lxterminal --geometry=80x20 -e sudo sh  editar_bluedv_02_07_04.sh"
+Icon=/home/pi/V7/EDITAR_BLUEDV.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Terminal=false
+Name[es_ES]=Editar BlueDV
+Hidden=false
+Comment[es_ES]=EA3EIZ
+

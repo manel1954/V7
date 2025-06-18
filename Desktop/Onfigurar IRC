@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=EA3EIZ
+Exec=sudo ircddbgatewayconfig
+Type=Application
+Terminal=false
+Comment[es_ES]=
+Name[es_ES]=Editar ircDDB
+Icon=/home/pi/V7/EDITAR.png

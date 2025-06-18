@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c 'cd /home/pi/V7; lxterminal --geometry=72x15 -e sudo sh ejecutar_mmdvm_30.sh'
+Icon=/home/pi/V7/MMDVM.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Terminal=false
+Name[es_ES]=Abrir Radio
+Hidden=false
+Comment[es_ES]=EA3EIZ

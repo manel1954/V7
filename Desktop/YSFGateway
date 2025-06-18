@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c 'cd /home/pi/V7;lxterminal --geometry=60x15 -e sudo sh ejecutar_ysf_30.sh'
+Icon=/home/pi/V7/C4FM.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Terminal=false
+Name[es_ES]=Abrir YSF
+Hidden=false
+Comment[es_ES]=EA3EIZ

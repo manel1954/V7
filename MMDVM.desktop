@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=MMDVM
+Comment=EA3EIZ MMDVM Image
+Exec=sh -c "cd /home/pi/SCRIPTS; lxterminal --geometry=100x31 -e sudo sh ejecutar_mmdvmLIBRE.sh"
+Type=Application
+Terminal=true

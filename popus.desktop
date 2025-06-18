@@ -1,0 +1,6 @@
+[Desktop Entry]
+Comment=EA3EIZ MMDVM Image
+Exec=sh -c 'cd /home/pi/V30;lxterminal --geometry=80x20 -e sudo sh popus_02_07_04.sh'
+Type=Application
+Terminal=false
+Name=presenta_popus

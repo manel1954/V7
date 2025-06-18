@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=NextionDriver
+Comment=EA3EIZ MMDVM Image
+Exec=sh -c 'cd /home/pi/NextionDriver/;sudo ./NextionDriver -c /home/pi/MMDVMHost/MMDVM.ini'
+Type=Application
+Terminal=false
+Name[es_ES]=NextionDriver

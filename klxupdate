@@ -1,0 +1,220 @@
+#!/bin/bash
+PACKAGE=$1
+SWITCH=$2
+SWITCH2=$3
+REBOOT=false
+DATALOC="/usr/local/etc"
+BINLOC="/usr/local/bin"
+FILEDUMP=~/tuxfilestmp
+function install_package(){
+   echo ""
+   sudo wget -q -O "$PACKAGE".tar.gz "www.westerndstar.co.uk/klxstuff/"$1"/"$dtvariable".tar.gz"
+   echo ""
+   echo "  ** Please wait while unpacking **" 
+   sudo tar -zxf ~/$1.tar.gz
+   echo ""
+   echo "  Removing $1.tar.gz"
+   echo ""
+   sudo rm ~/$1.tar.gz
+   echo "  ** Please be patient while installing $1 applications **"
+   echo "             ** Installing to  ""$BINLOC **"
+   while [ "$TX" != "END" ]	
+   do
+      i=`expr $i + 1`
+      TX=$(sed -n "$i"p /usr/local/etc/"$1"_list.txt)
+	  if [ -f ~/$1/"$TX" ]; then
+				#Test if application is already running
+         	PIDS=`ps cax | grep $TX | grep -o '^[ ]*[0-9]*'`
+         	if [ -z "$PIDS" ]; then
+            		echo "" 
+         	else
+            		echo ""
+            		echo "** $TX is currently running and will need to be stopped **" 
+            		echo "STOPPING $TX" 1>&2
+            		echo ""
+            		sudo pkill $TX
+         	fi
+         	if [ "$TX" != "END" ]; then
+            		echo "  Installing $TX"	
+            		sudo install -g bin -o root -m 0775 ~/$1/"$TX"  $BINLOC
+         	fi
+	  fi
+   done
+   
+
+   if [ -f "$PACKAGE"/klxupdate ]; then
+     echo "** New updater script included in this package **"
+     echo "     ** Installing new 'klxupdate' script **"
+     sudo install -g bin -o root -m 0775 "$PACKAGE"/klxupdate  $BINLOC   
+     echo ""
+     echo " You may need to run 'klxupdate' again to use its modifications " 
+     sudo rm klxupdate
+   fi
+          
+   echo ""
+   if [ "$SWITCH" = "-nohost" ] || [ "$SWITCH2" = "-nohost" ]; then
+	echo ""
+	echo "** Ignoring data files by request **"
+	echo ""
+   else
+ 	
+   	echo "** Please be patient while installing data files **"
+   	sudo install -g bin -o root -m 0664 ~/$PACKAGE/etc/*.* $DATALOC
+   	echo ""
+   	echo ""
+   	echo "----------------------------------------------------------"
+   	echo "                        ** DONE **"
+   	echo "----------------------------------------------------------"
+   	echo ""
+   fi
+
+if [ "$SWITCH" = "-npr" ] || [ "$SWITCH2" = "-npr" ]; then
+   REBOOT=true   
+fi
+
+if [ -f "$PACKAGE"/fix ]; then
+   echo ""
+   echo " ** Minor 'fix' script included in this package **"
+   echo "   ** Please wait while applying 'fix' script **"
+   sudo "$PACKAGE"/fix
+   echo ""
+   echo " You may need to run 'klxupdate' again to use its modifications "
+   echo ""	
+fi
+
+echo ""
+
+echo "** Tidying-up by deleting $PACKAGE directory **"
+sudo rm -r ~/$PACKAGE
+sudo rm ~/version_list.txt
+sudo rm ~/""$PACKAGE"_list.txt"
+echo ""
+echo "----------------------------------------------------------"
+echo "                        ** DONE **"
+echo "----------------------------------------------------------"
+
+
+if [ "$REBOOT" = true ] ; then
+   echo " ** REBOOTING **"     
+   sudo reboot
+fi
+
+} 
+
+echo ""
+echo "  ****************************************"
+echo "  *      KLXUpdater version 1.74         *"
+echo "  *                                      *"
+echo "  * Software updater for G4KLX packages  *"
+echo "  * Jonathan Naylor has NO responsibilty *"
+echo "  * or liablility for the function or    *"
+echo "  *     maintenance of this script.      *"
+echo "  *               GW6WTK                 *"
+echo "  ****************************************"
+echo ""
+
+if [ "$PACKAGE" = "--help" ]; then
+   echo ""
+   echo "Usage: 'klxupdate repeater' or 'klxupdate gateway' or 'klxupdate extras' or 'klxupdate hostfiles'"
+   echo ""
+   echo "Switch, -np (no prompts) will automatically select and install the latest package without any prompts"
+   echo ""
+   echo "Switch, -nohost will avoid overwriting your current hostfiles when updating or rolling-back"
+   echo ""
+   echo "Switch, -npr (no prompts and reboot) will automatically select and install the latest package without any prompts and reboot"
+   echo ""      
+   echo "Thanks to Graham G1RNZ for some of these suggestions"
+   echo ""
+   exit 1
+fi
+
+if [ "$PACKAGE" = "hostfiles" ]; then
+   if [ -d $FILEDUMP ];then 
+      sudo rm -r $FILEDUMP 
+   fi 
+   sudo mkdir $FILEDUMP
+   cd $FILEDUMP
+   if [ "$SWITCH" = "-full" ]; then
+      filepath="www.westerndstar.co.uk/klxstuff/files/full/"
+   else    
+      filepath="www.westerndstar.co.uk/klxstuff/files/"
+   fi
+   
+echo""
+echo "  *****************************************"
+echo "  *           ** Host_Files **            *"
+echo "  *                                       *"
+echo "  * You have chosen to update your        *"
+echo "  * *host.txt files, the data for these   *"
+echo "  * files is provided by Adrian VK4TUX.   *"
+echo "  * The default option is the base data   *"
+echo "  * set, the '-full' option files are     *"
+echo "  * much larger and could slow down the   *"
+echo "  * loading of certain R-Pi applications  *"
+echo "  * considerably, but should function OK. *"
+echo "  *               GW6WTK                  *"
+echo "  *****************************************"
+echo ""
+   
+echo ""
+echo " ** Please wait while downloading files **"
+   sudo wget -q "$filepath""DCS_Hosts.txt"
+   sudo wget -q "$filepath""DExtra_Hosts.txt"
+   sudo wget -q "$filepath""DPlus_Hosts.txt"
+echo ""
+echo " ** Please wait while copying files **"
+echo ""
+   sudo mv -f $FILEDUMP"/"*.txt /usr/local/etc
+   sudo rm -r $FILEDUMP
+echo "----------------------------------------------------------"
+   echo "                        ** DONE **"
+   echo "----------------------------------------------------------"
+   echo ""
+   exit 0
+fi
+
+
+if [ "$PACKAGE" != "repeater" -a  "$PACKAGE" != "gateway" -a  "$PACKAGE" != "extras" -a  "$PACKAGE" != "hostfiles" ]; then
+   echo ""
+   echo "Usage: 'klxupdate repeater' or 'klxupdate gateway' or 'klxupdate extras' or 'klxupdate hostfiles' or 'klxupdate --help'"
+   exit 1
+else
+   i=0
+
+   cd ~/
+   sudo wget -q -O ~/"version_list.txt" www.westerndstar.co.uk/klxstuff/"$PACKAGE"/"version_list.txt" 	# Get list of versions available
+   sudo wget -q -O ~/""$PACKAGE"_list.txt" www.westerndstar.co.uk/klxstuff/"$PACKAGE""_list.txt"		# Get list of applications within the package
+   sudo install -g bin -o root -m 0664 ~/"$PACKAGE"_list.txt "/usr/local/etc"					# Install the list of applications
+   dumpfile=~/"version_list.txt"
+
+   if [ "$SWITCH" != "-np" -a "$SWITCH" != "-npr" -a "$SWITCH2" != "-np" -a "$SWITCH2" != "-npr" ]; then
+      cat -n "$dumpfile"
+      echo "  (latest version)"
+      echo ""
+      read -p "Please make a selection, or select q to Quit " choice
+      case $choice in		# Check for digits
+         [0-9])   dtvariable=$(sed -n "$choice"p "$dumpfile")
+            echo ""
+	    echo ""								
+	    read -p "Are you sure you wish to install $dtvariable Y/N ? it may disrupt your settings! " install
+ 	    echo ""
+ 	    if [ "$install" != "y" -a "$install" != "Y" ]; then
+	        exit 1
+	    fi  
+	    ;;
+	q|Q)    
+     	   sudo rm *_list.txt
+           exit 1
+            break
+           ;;
+	  *)
+      esac
+      echo "  ** Please wait while getting package **"
+      install_package "$PACKAGE"   
+   else
+      echo "  ** Please wait while getting latest package **"
+      dtvariable="$PACKAGE"
+      install_package "$PACKAGE"
+   fi    
+fi
+  

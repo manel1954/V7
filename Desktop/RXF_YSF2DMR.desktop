@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=ls
+Icon=/home/pi/V7/RXF_YSF2DMR.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Name[en_US]=MMDVM Connect Screen
+Terminal=false
+Name=0
+Hidden=false

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Dialer
+#GenericName=DV4mini
+Comment=DV4mini_DJ0ABR
+Exec=sh -c "cd /home/pi/bmxtg; python bmxtg.py"
+Terminal=false
+Type=Application
+#Encoding=UTF-8
+Icon=/home/pi/V7/DIALER.png
+Categories=Hamradio;System;Utility;
+Comment[es_ES]=

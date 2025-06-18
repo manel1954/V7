@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c 'cd /home/pi/V7/;lxterminal --geometry=80x47 -e sudo sh actualizar_IDS_MMDVMHost.sh'
+Icon=/home/pi/V7/UPDATE.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Terminal=false
+Name[es_ES]=Actualizar IDS MMDVMHost
+Hidden=false
+Comment[es_ES]=EA3EIZ

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=solodstar
+Comment=Application
+Exec=sh -c 'cd /home/pi/V30; sudo sh ejecutar_solodstar_04.sh'
+Icon=/usr/share/pixmaps/openbox.xpm
+Terminal=false
+Type=Application

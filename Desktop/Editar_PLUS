@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c "cd /home/pi/V7;lxterminal --geometry=80x50 -e sudo sh  editar_MMDVMPLUS_02_07_04.sh"
+Icon=/home/pi/V7/DMRPLUS_EDITOR.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Name[en_US]=MMDVM Connect Screen
+Terminal=false
+Name[es_ES]=Editar DMR+
+Hidden=false
+Comment[es_ES]=

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Editar solo D-STAR
+Comment=
+Exec=sh -c "cd /home/pi/V7;lxterminal --geometry=80x50 -e sudo sh  editar_MMDVMDSTAR_02_07_04.sh"
+Icon=/home/pi/V7/SOLO_D-STAR.png
+Path=/home/pi/MMDVMHost
+Terminal=false
+StartupNotify=false

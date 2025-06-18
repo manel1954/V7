@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c "cd /home/pi/V7;lxterminal --geometry=80x43 -e sudo sh  editar_YSF2DMR_02_07_05.sh"
+Icon=/home/pi/V7/YSF2DMR_EDIT.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Terminal=false
+Name[es_ES]=Editar YSF2DMR
+Hidden=false
+Comment[es_ES]=EA3EIZ

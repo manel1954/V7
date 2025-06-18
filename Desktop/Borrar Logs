@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=EA3EIZ
+Exec=sh -c 'cd /home/pi/V7; sudo sh borrar_logs_06.sh'
+Type=Application
+Terminal=true
+Comment[es_ES]=
+Name[es_ES]=Borrar logs
+Icon=/home/pi/V7/papelera1.png

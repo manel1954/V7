@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=remotecontrol
+Icon=/home/pi/V7/REMOTE_CONTROL.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Name[en_US]=MMDVM Connect Screen
+Terminal=false
+Name[es_ES]=Remote
+Hidden=false
+Comment[es_ES]=

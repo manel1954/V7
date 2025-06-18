@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c "cd /home/pi/V7;lxterminal --geometry=80x15 -e sudo sh  Actualizar_DV4mini_05.sh"
+Icon=/home/pi/V7/dv4k.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Name[en_US]=MMDVM Connect Screen
+Terminal=true
+Name[es_ES]=Actualizar DV4mini
+Hidden=false
+Comment[es_ES]=
+X-KeepTerminal=false

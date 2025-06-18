@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c "geany /home/pi/bluedv/DExtra_Hosts.txt"
+Icon=/home/pi/V7/EDITAR_BLUEDV.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Terminal=false
+Name[es_ES]=Editar DExtra BlueDV
+Hidden=false
+Comment[es_ES]=EA3EIZ
+

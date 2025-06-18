@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Terminal=true
+Exec=sh -c "cd  /home/pi/V7; lxterminal --geometry=80x30 -e sudo sh Copia-Restauracion_02_07_04.sh"
+Icon=/home/pi/V7/ACTUALIZA_BD.png
+Type=Application
+Categories=GTK;Utility;TerminalEmulator;
+Name[en_US]=MMDVM Connect Screen
+Terminal=false
+Name[es_ES]=COPIAR RESTAURAR
+
