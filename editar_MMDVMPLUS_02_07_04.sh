@@ -1167,7 +1167,7 @@ do
 			                    [nN]* ) echo ""
 			                    letra1=c
                           linea4=$linea238port$letra1
-			                    sed -i "$linea4 #Options=StartRef=4370;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
+			                     sed -i "238c #Options=" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 esac
 done;;
