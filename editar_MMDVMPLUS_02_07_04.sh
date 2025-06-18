@@ -180,10 +180,16 @@ letra=p
 linea2port=$lineaport$letra
 var100port= sed -n $linea2port  /home/pi/MMDVMHost/$DIRECTORIO;
 
-echo -n "${CIAN}  13)${GRIS} Modificar Password    - ${AMARILLO}"
-pas=`grep -n '\<Password\>' /home/pi/MMDVMHost/$DIRECTORIO`
-pas1=`expr substr $pas 5 30`
-echo "$pas1"
+remoteport=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemotePort=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -e "${CIAN}     )${GRIS} Valor RemotePort       - ${AMARILLO}${remoteport}\33[1;37m"
+
 
 echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
 txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/$DIRECTORIO`
