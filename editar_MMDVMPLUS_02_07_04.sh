@@ -180,7 +180,7 @@ in_section && /^RemotePort=/ {
     print a[2]
     exit
 }' /home/pi/MMDVMHost/$DIRECTORIO)
-echo -n "${CIAN}  13)${GRIS} Valor RemotePort       - ${AMARILLO}${remoteport}\33[1;37m"
+echo -n "${CIAN}  13)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteport}\33[1;37m"
 echo ""
 
 echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
