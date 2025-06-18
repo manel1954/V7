@@ -648,25 +648,36 @@ done;;
 13) echo ""
 while true
 do
-                         REMOTEPORT=$(awk '
-/^\[DMR Network\]/ {in_section=1; next}
-/^\[/ {in_section=0}
-in_section && /^RemotePort=/ {
-    split($0, a, "=")
-    print a[2]
-    exit
-}' /home/pi/MMDVMHost/$DIRECTORIO)
+    # Buscar el valor actual de RemotePort en la sección [DMR Network]
+    remoteport=$(awk '
+    /^\[DMR Network\]/ {in_section=1; next}
+    /^\[/ {in_section=0}
+    in_section && /^RemotePort=/ {
+        split($0, a, "=")
+        print a[2]
+        exit
+    }' /home/pi/MMDVMHost/$DIRECTORIO)
 
-echo "   Valor actual del RemotePort: ${AMARILLO}${REMOTEPORT}\33[1;37m"
+    echo "   Valor actual de RemotePort: ${AMARILLO}${remoteport}\33[1;37m"
 
-			                    [sS]* ) echo ""
-			                    pas1=`echo "$pas1" | tr -d '[[:space:]]'`
-                          sed -i "$linea Password=$pas1" /home/pi/MMDVMHost/$DIRECTORIO
-			                    break;;
-			                    [nN]* ) echo ""
-			                    break;;
-esac
+    read -p 'Introduce nuevo valor para RemotePort (ENTER para mantener el actual): ' nuevo_port
+
+    # Si no se introduce nada, se mantiene el actual
+    if [ -z "$nuevo_port" ]; then
+        echo "   No se ha modificado RemotePort."
+        break
+    fi
+
+    # Eliminar espacios por si acaso
+    nuevo_port=$(echo "$nuevo_port" | tr -d '[[:space:]]')
+
+    # Actualizar el valor en el archivo
+    sed -i "/^\[DMR Network\]/,/^\[/ s/^RemotePort=.*/RemotePort=$nuevo_port/" /home/pi/MMDVMHost/$DIRECTORIO
+
+    echo "   RemotePort actualizado a: ${AMARILLO}$nuevo_port\33[1;37m"
+    break
 done;;
+
 14) echo ""
 while true
 do
