@@ -110,7 +110,7 @@ echo "${CIAN}   8)${GRIS} Puerto para placa NTH/ZUM en arduino y Pincho Low Cost
 echo "${CIAN}   9)${GRIS} Puerto para DVMEGA + Bluestack conectado por USB a Raspberry Pi(ttyUSB0)${AMARILLO}"
 echo -n "                            - "
 
-mode=`grep -n -m 1 "^Port=" /home/pi/MMDVMHost/$DIRECTORIO`
+mode=`grep -n -m 1 "^UartPort=" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
 caracteres=`expr index $mode $buscar`
 caracteres_linea=`expr $caracteres - 1`
