@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 TryExec=lxterminal
-Exec=sh -c "cd /home/pi/V7;lxterminal --geometry=88x30 -e sudo sh nota_version_02_07_05.sh"
+Exec=sh -c "cd /home/pi/V7;lxterminal --geometry=88x30 -e sudo sh nota_version.sh"
 Icon=/home/pi/V7/ICONO-ADER_02_07_03.png
 Type=Application
 StartupNotify=false
