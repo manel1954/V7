@@ -381,7 +381,7 @@ echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cam
 
 echo "${CIAN}  29)\33[1;37m Guardar  fichero de Configuración en M1 ${CIAN}"
 echo -n "${CIAN}  30)\33[1;32m Utilizar fichero de Configuración de M1: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia`
+master=`grep -n -m 1 "^RemoteAddress=" /home/pi/MMDVMHost/$DIRECTORIO_copia`
 buscar=":"
 largo=`expr index $master $buscar`
 largo=`expr $largo + 9`
@@ -392,7 +392,7 @@ echo " - $memoria1"
 
 echo "${CIAN}  31)\33[1;37m Guardar  fichero de Configuración en M2: ${CIAN}"
 echo -n "${CIAN}  32)\33[1;32m Utilizar fichero de Configuración en M2: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia2`
+master=`grep -n -m 1 "^RemoteAddress=" /home/pi/MMDVMHost/$DIRECTORIO_copia2`
 buscar=":"
 largo=`expr index $master $buscar`
 largo=`expr $largo + 9`
@@ -403,7 +403,7 @@ echo " - $memoria2"
 
 echo "${CIAN}  33)\33[1;37m Guardar  fichero de Configuración en M3: ${CIAN}"
 echo -n "${CIAN}  34)\33[1;32m Utilizar fichero de Configuración en M3: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia3`
+master=`grep -n -m 1 "^RemoteAddress=" /home/pi/MMDVMHost/$DIRECTORIO_copia3`
 buscar=":"
 largo=`expr index $master $buscar`
 largo=`expr $largo + 9`
