@@ -18,16 +18,7 @@ echo "   ************************************************************"
 
 
 
-echo -n "\33[1;36m   104)\33[1;37m  Quitar DV4mini del autoarranque       - "
-DV4mini=`grep "DV4mini" /home/pi/autoarranque_07.ini`
-DV4mini=`expr substr $DV4mini 9 3`
-if [ $DV4mini = "ON" ]
-then
-echo "\33[1;32m$DV4mini"
-else
-echo "\33[1;31m"
-fi
-bluedv=`grep "DV4mini" /home/pi/autoarranque_07.ini`
+
 
 echo -n "\33[1;36m   105)\33[1;37m  Quitar Radio del autoarranque         - "
 MMDVMPLACA=`grep "MMDVMPLACA" /home/pi/autoarranque_07.ini`
@@ -167,16 +158,7 @@ echo "\33[1;33m"
 
 
 
-echo -n "\33[1;36m   204)\33[1;33m  Poner DV4mini en el autoarranque      - "
-DV4mini=`grep "DV4mini" /home/pi/autoarranque_07.ini`
-DV4mini=`expr substr $DV4mini 9 3`
-if [ $DV4mini = "OFF" ]
-then
-echo "\33[1;31m$DV4mini"
-else
-echo "\33[1;31m"
-fi
-bluedv=`grep "DV4mini" /home/pi/autoarranque_07.ini`
+
 
 echo -n "\33[1;36m   205)\33[1;33m  Poner Radio en el autoarranque        - "
 MMDVMPLACA=`grep "MMDVMPLACA" /home/pi/autoarranque_07.ini`
@@ -326,23 +308,7 @@ case $escoger_menu in
 
 
 
-104) echo ""
-while true
-do
-clear            
-                        actualizar=S
-		                    case $actualizar in
-			                  [sS]* ) echo ""
-			                  echo "Quitando DV4mini del autoarranque >>>>>"
-                        sleep 2
-                        cd /home/pi/.config/autostart
-                        mv DV4MINI.desktop /home/pi/AUTOARRANQUEV7
-                        sed -i "4c DV4mini=OFF" /home/pi/autoarranque_07.ini
-                        break;;
-                        [nN]* ) echo ""
-                        break;;
-esac
-done;;
+
 105) echo ""
 while true
 do
@@ -504,23 +470,7 @@ clear
 esac
 done;;
 
-204) echo ""
-while true
-do
-clear               
-                        actualizar=S
-		                    case $actualizar in
-			                  [sS]* ) echo ""
-			                  echo "Poniendo DV4mini en el autoarranque >>>>>"
-                        sleep 2
-                        cd /home/pi/AUTOARRANQUEV7
-                        mv DV4MINI.desktop /home/pi/.config/autostart
-                        sed -i "4c DV4mini=ON" /home/pi/autoarranque_07.ini
-                        break;;
-                        [nN]* ) echo ""
-                        break;;
-esac
-done;;
+
 205) echo ""
 while true
 do
