@@ -22,7 +22,7 @@ primer1="34c"
 segun1="35c"
 tercer1="36c"
 
- # Recoge datos para leer desde el panel de control
+# Recoge datos para leer desde el panel de control
 indi=$(awk "NR==2" /home/pi/MMDVMHost/$DIRECTORIO)
 sed -i "$primero $indi" /home/pi/info_panel_control.ini
 ide=$(awk "NR==3" /home/pi/MMDVMHost/$DIRECTORIO)
@@ -126,16 +126,30 @@ idd=`grep -n "Id=" /home/pi/MMDVMHost/$DIRECTORIO`
 idd1=`expr substr $idd 3 30`
 echo "$idd1"
 
-remoteaddress=$(awk '
-/^\[DMR Network\]/ {in_section=1; next}
-/^\[/ {in_section=0}
-in_section && /^RemoteAddress=/ {
-    split($0, a, "=")
-    print a[2]
-    exit
-}' /home/pi/MMDVMHost/$DIRECTORIO)
-echo -n "${CIAN}  13)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
-echo ""
+echo -n "${CIAN}  11)${GRIS} Modificar Address     - ${AMARILLO}"
+master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO`
+buscar=":"
+largo=`expr index $master $buscar`
+largo=`expr $largo + 1`
+largo1=`expr $largo - 2`
+master1=`expr substr $master $largo 40`
+largo=`expr substr $master 1 $largo1`
+letra=c            
+linea_master=$largo$letra
+echo "$master1"
+
+echo -n "${CIAN}  12)${GRIS} Modificar Puerto      - ${AMARILLO}"
+lineaport=`expr substr $master 1 $largo1`
+lineaport=`expr $lineaport + 1`
+linea3port=$lineaport
+letra=p
+linea2port=$lineaport$letra
+var100port= sed -n $linea2port  /home/pi/MMDVMHost/$DIRECTORIO;
+
+echo -n "${CIAN}  13)${GRIS} Modificar Password    - ${AMARILLO}"
+pas=`grep -n '\<Password\>' /home/pi/MMDVMHost/$DIRECTORIO`
+pas1=`expr substr $pas 5 30`
+echo "$pas1"
 
 echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
 txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/$DIRECTORIO`
@@ -343,8 +357,13 @@ numero_linea_jiter_letrac=$numero_linea$letrac
 echo "  ${CIAN}      k) ${GRIS}Jitter      - ${AMARILLO}$Jitter"
 
 echo -n "${CIAN}  27)${GRIS} Entra reflector DMR+  - ${AMARILLO}"
-var300port= sed -n '238p'  /home/pi/MMDVMHost/$DIRECTORIO;
-echo "$var300port"
+OPCION=`expr substr $pas 1 $largo1`
+OPCION=`expr $OPCION + 1`
+linea33port=$OPCION
+letra=p
+linea22port=$OPCION$letra
+var300port= sed -n $linea22port  /home/pi/MMDVMHost/$DIRECTORIO;
+
 echo ""
 echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cambio${AMARILLO}"
 
@@ -380,6 +399,9 @@ copia3=`expr substr $master $largo 40`
 echo -n "$copia3"
 memoria3=$(awk "NR==$tercer1" /home/pi/info_panel_control.ini)
 echo " - $memoria3"
+
+echo ""
+echo "${CIAN}  35)\33[1;31m Recuperar el fichero original $DIRECTORIO${AMARILLO}"
 
 echo ""
 echo "${CIAN}   0)\33[1;34m Salir del script \33[1;31m OJO!! no salir con ctrl+c ni con la x"
@@ -480,7 +502,8 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
+                          numero_linea_port=$numero_linea_port$letrac
+                          sed -i "$numero_linea_port Port=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -493,7 +516,8 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
+                          numero_linea_port=$numero_linea_port$letrac
+                          sed -i "$numero_linea_port Port=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -502,11 +526,12 @@ done;;
 8) echo ""
 while true
 do
-actualizar=S 
+                          actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
+                          numero_linea_port=$numero_linea_port$letrac
+                          sed -i "$numero_linea_port Port=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -515,11 +540,13 @@ done;;
 9) echo ""
 while true
 do
-actualizar=S 
+                     
+                          actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
+                          numero_linea_port=$numero_linea_port$letrac
+                          sed -i "$numero_linea_port Port=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -587,36 +614,28 @@ done;;
 13) echo ""
 while true
 do
-    # Buscar el valor actual de RemoteAddress en la sección [DMR Network]
-    remoteaddress=$(awk '
-    /^\[DMR Network\]/ {in_section=1; next}
-    /^\[/ {in_section=0}
-    in_section && /^RemoteAddress=/ {
-        split($0, a, "=")
-        print a[2]
-        exit
-    }' /home/pi/MMDVMHost/$DIRECTORIO)
-
-    echo "   Valor actual de RemoteAddress: ${AMARILLO}${remoteaddress}\33[1;37m"
-
-    read -p 'Introduce nuevo valor para RemoteAddress (ENTER para mantener el actual): ' nuevo_address
-
-    # Si no se introduce nada, se mantiene el actual
-    if [ -z "$nuevo_address" ]; then
-        echo "   No se ha modificado RemoteAddress."
-        break
-    fi
-
-    # Eliminar espacios por si acaso
-    nuevo_port=$(echo "$nuevo_port" | tr -d '[[:space:]]')
-
-    # Actualizar el valor en el archivo
-    sed -i "/^\[DMR Network\]/,/^\[/ s/^RemoteAddress=.*/RemoteAddress=$nuevo_address/" /home/pi/MMDVMHost/$DIRECTORIO
-
-    echo "   RemoteAddress actualizado a: ${AMARILLO}$nuevo_address\33[1;37m"
-    break
+                          buscar=":"
+                          largo=`expr index $pas $buscar`
+                          echo "   Valor actual del Password: ${AMARILLO}${pas#*=}\33[1;37m"
+           	              read -p 'Brandmeister=passw0rd   DMR+=PASSWORD: ' pas1
+                          letra=c
+                          if [ $largo = 3 ]
+                          then
+                          linea=`expr substr $pas 1 2`
+                          else
+                          linea=`expr substr $pas 1 3`
+                          fi
+                          linea=$linea$letra
+                          actualizar=S 
+                          case $actualizar in
+			                    [sS]* ) echo ""
+			                    pas1=`echo "$pas1" | tr -d '[[:space:]]'`
+                          sed -i "$linea Password=$pas1" /home/pi/MMDVMHost/$DIRECTORIO
+			                    break;;
+			                    [nN]* ) echo ""
+			                    break;;
+esac
 done;;
-
 14) echo ""
 while true
 do
@@ -1147,12 +1166,14 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
 			                    read -p 'Intruduce reflector DMR+ al que se conectara (ej:4370) ' opcion
-                          sed -i "238c Options=StartRef=$opcion;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
+                          letra1=c
+                          linea4=$linea33port$letra1
+                          sed -i "$linea4 Options=StartRef=$opcion;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    letra1=c
-                          linea4=$linea238port$letra1
-			                     sed -i "238c #Options=" /home/pi/MMDVMHost/$DIRECTORIO
+                          linea4=$linea33port$letra1
+			                    sed -i "$linea4 #Options=StartRef=4370;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 esac
 done;;

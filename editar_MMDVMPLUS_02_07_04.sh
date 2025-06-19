@@ -126,6 +126,34 @@ idd=`grep -n "Id=" /home/pi/MMDVMHost/$DIRECTORIO`
 idd1=`expr substr $idd 3 30`
 echo "$idd1"
 
+
+
+remoteport=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemotePort=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  11)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteport}\33[1;37m"
+echo ""
+
+
+
+password=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^Password=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  12)${GRIS} Valor Password      - ${AMARILLO}${password}\33[1;37m"
+echo ""
+
+
+
 remoteaddress=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
 /^\[/ {in_section=0}
@@ -136,6 +164,9 @@ in_section && /^RemoteAddress=/ {
 }' /home/pi/MMDVMHost/$DIRECTORIO)
 echo -n "${CIAN}  13)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
 echo ""
+
+
+
 
 echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
 txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/$DIRECTORIO`
@@ -584,6 +615,51 @@ do
                           break;;
 esac
 done;;
+
+
+
+
+11) echo ""
+while true
+do
+    # Buscar el valor actual de RemoteAddress en la sección [DMR Network]
+    remoteaddress=$(awk '
+    /^\[DMR Network\]/ {in_section=1; next}
+    /^\[/ {in_section=0}
+    in_section && /^RemotePort=/ {
+        split($0, a, "=")
+        print a[2]
+        exit
+    }' /home/pi/MMDVMHost/$DIRECTORIO)
+
+    echo "   Valor actual de RemotePort: ${AMARILLO}${remoteaddress}\33[1;37m"
+
+    read -p 'Introduce nuevo valor para RemotePort (ENTER para mantener el actual): ' nuevo_port
+
+    # Si no se introduce nada, se mantiene el actual
+    if [ -z "$nuevo_port" ]; then
+        echo "   No se ha modificado RemotePort."
+        break
+    fi
+
+    # Eliminar espacios por si acaso
+    nuevo_port=$(echo "$nuevo_port" | tr -d '[[:space:]]')
+
+    # Actualizar el valor en el archivo
+    sed -i "/^\[DMR Network\]/,/^\[/ s/^RemotePort=.*/RemotePort=$nuevo_port/" /home/pi/MMDVMHost/$DIRECTORIO
+
+    echo "   RemotePort actualizado a: ${AMARILLO}$nuevo_port\33[1;37m"
+    break
+done;;
+
+
+
+
+
+
+
+
+
 13) echo ""
 while true
 do
