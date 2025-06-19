@@ -1,4 +1,5 @@
 ﻿#!/bin/bash
+clear
 while true
 do
 clear
