@@ -389,7 +389,7 @@ clear
                         case $ejecutar1 in
                         [sS]* ) echo ""
                         clear 
-                        sudo cp /home/pi/V7/Desktop/*.*  /home/pi/Desktop/                                                             
+                        sudo cp -R /home/pi/V7/Desktop/  /home/pi/                                                             
                         exit;
                         break;;
                         [nN]* ) echo ""
