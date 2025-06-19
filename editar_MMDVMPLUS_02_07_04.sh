@@ -1,8 +1,4 @@
 ﻿#!/bin/bash
-clear
-while true
-do
-clear
 
   #Editor MMDVMBM.ini
 DIRECTORIO="MMDVMPLUS.ini"
