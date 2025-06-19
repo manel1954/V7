@@ -3,24 +3,8 @@ while true
 do
 clear
 
-  #Editor MMDVMPLUS.ini
+  #Editor MMDVMBM.ini
 DIRECTORIO="MMDVMPLUS.ini"
-DIRECTORIO_copia="MMDVMPLUS.ini_copia"
-DIRECTORIO_copia2="MMDVMPLUS.ini_copia2"
-DIRECTORIO_copia3="MMDVMPLUS.ini_copia3"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para leer desde el panel de control
-primero="11c"
-segundo="12c"
-tercero="13c"
-cuarto="14c"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-primer="31c"
-segun="32c"
-tercer="33c"
-  #Lee los datos del fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-primer1="31c"
-segun1="32c"
-tercer1="33c"
 
 # Recoge datos para leer desde el panel de control
 indi=$(awk "NR==2" /home/pi/MMDVMHost/$DIRECTORIO)
@@ -125,9 +109,6 @@ echo -n "${CIAN}  10)${GRIS} Modificar ID          - ${AMARILLO}"
 idd=`grep -n "Id=" /home/pi/MMDVMHost/$DIRECTORIO`
 idd1=`expr substr $idd 3 30`
 echo "$idd1"
-
-
-
 remoteport=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
 /^\[/ {in_section=0}
@@ -138,8 +119,6 @@ in_section && /^RemotePort=/ {
 }' /home/pi/MMDVMHost/$DIRECTORIO)
 echo -n "${CIAN}  11)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteport}\33[1;37m"
 echo ""
-
-
 
 password=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
@@ -152,8 +131,6 @@ in_section && /^Password=/ {
 echo -n "${CIAN}  12)${GRIS} Valor Password        - ${AMARILLO}${password}\33[1;37m"
 echo ""
 
-
-
 remoteaddress=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
 /^\[/ {in_section=0}
@@ -164,9 +141,6 @@ in_section && /^RemoteAddress=/ {
 }' /home/pi/MMDVMHost/$DIRECTORIO)
 echo -n "${CIAN}  13)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
 echo ""
-
-
-
 
 echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
 txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/$DIRECTORIO`
@@ -378,39 +352,6 @@ var300port= sed -n '238p'  /home/pi/MMDVMHost/$DIRECTORIO;
 echo "$var300port"
 echo ""
 echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cambio${AMARILLO}"
-
-echo "${CIAN}  29)\33[1;37m Guardar  fichero de Configuración en M1 ${CIAN}"
-echo -n "${CIAN}  30)\33[1;32m Utilizar fichero de Configuración de M1: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia1=`expr substr $master $largo 40`
-echo -n "$copia1"
-memoria1=$(awk "NR==$primer1" /home/pi/info_panel_control.ini)
-echo " - $memoria1"
-
-echo "${CIAN}  31)\33[1;37m Guardar  fichero de Configuración en M2: ${CIAN}"
-echo -n "${CIAN}  32)\33[1;32m Utilizar fichero de Configuración en M2: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia2`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia2=`expr substr $master $largo 40`
-echo -n "$copia2"
-memoria2=$(awk "NR==$segun1" /home/pi/info_panel_control.ini)
-echo " - $memoria2"
-
-echo "${CIAN}  33)\33[1;37m Guardar  fichero de Configuración en M3: ${CIAN}"
-echo -n "${CIAN}  34)\33[1;32m Utilizar fichero de Configuración en M3: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia3`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia3=`expr substr $master $largo 40`
-echo -n "$copia3"
-memoria3=$(awk "NR==$tercer1" /home/pi/info_panel_control.ini)
-echo " - $memoria3"
 
 echo ""
 echo "${CIAN}   0)\33[1;34m Salir del script \33[1;31m OJO!! no salir con ctrl+c ni con la x"
@@ -1241,121 +1182,7 @@ do
 			                    break;;
 esac
 done;;
-29) echo ""
-while true
-do
-                        actualizar=S
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "Introduce nombre memoria máximo 10 caracteres"
-                        read memoria1
-                        echo "<<<<<< Haciendo copia de seguridad de la M1 >>>>>"
-                        sleep 3
-                        sed -i "$primer $memoria1" /home/pi/info_panel_control.ini
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO /home/pi/MMDVMHost/$DIRECTORIO_copia
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-30) echo ""
-while true
-do
-                        actualizar=S
-                        case $actualizar in
-                        [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando copia de seguridad de la M1 >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO_copia /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-31) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "Introduce nombre memoria máximo 10 caracteres"
-                        read memoria2
-                        echo "<<<<<< Haciendo copia de seguridad de la M2 >>>>>"
-                        sleep 3
-                        sed -i "$segun $memoria2" /home/pi/info_panel_control.ini
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO /home/pi/MMDVMHost/$DIRECTORIO_copia2
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-32) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando copia de seguridad  de la M2 >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO_copia2 /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-33) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "Introduce nombre memoria máximo 10 caracteres"
-                        read memoria3
-                        echo "<<<<<< Haciendo copia de seguridad de la M3 >>>>>"
-                        sleep 3
-                        sed -i "$tercer $memoria3" /home/pi/info_panel_control.ini
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO /home/pi/MMDVMHost/$DIRECTORIO_copia3
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-34) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando copia de seguridad de la M3 >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO_copia3 /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-35) echo ""
-while true
-do
-          	        
-           	            read -p 'Quieres restaurar el fichero original $DIRECTORIO? S/N ' restaurar1   
-                        case $restaurar1 in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando el fichero original $DIRECTORIO >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/MMDVM.ini_original /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
+
 0) echo ""
 clear
 echo "${AMARILLO}   **************************************************"

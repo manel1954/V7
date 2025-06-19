@@ -5,22 +5,6 @@ clear
 
   #Editor MMDVMBM.ini
 DIRECTORIO="MMDVMBM.ini"
-DIRECTORIO_copia="MMDVMBM.ini_copia"
-DIRECTORIO_copia2="MMDVMBM.ini_copia2"
-DIRECTORIO_copia3="MMDVMBM.ini_copia3"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para leer desde el panel de control
-primero="1c"
-segundo="2c"
-tercero="3c"
-cuarto="4c"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-primer="34c"
-segun="35c"
-tercer="36c"
-  #Lee los datos del fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-primer1="34c"
-segun1="35c"
-tercer1="36c"
 
 # Recoge datos para leer desde el panel de control
 indi=$(awk "NR==2" /home/pi/MMDVMHost/$DIRECTORIO)
@@ -125,9 +109,6 @@ echo -n "${CIAN}  10)${GRIS} Modificar ID          - ${AMARILLO}"
 idd=`grep -n "Id=" /home/pi/MMDVMHost/$DIRECTORIO`
 idd1=`expr substr $idd 3 30`
 echo "$idd1"
-
-
-
 remoteport=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
 /^\[/ {in_section=0}
@@ -138,8 +119,6 @@ in_section && /^RemotePort=/ {
 }' /home/pi/MMDVMHost/$DIRECTORIO)
 echo -n "${CIAN}  11)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteport}\33[1;37m"
 echo ""
-
-
 
 password=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
@@ -152,8 +131,6 @@ in_section && /^Password=/ {
 echo -n "${CIAN}  12)${GRIS} Valor Password        - ${AMARILLO}${password}\33[1;37m"
 echo ""
 
-
-
 remoteaddress=$(awk '
 /^\[DMR Network\]/ {in_section=1; next}
 /^\[/ {in_section=0}
@@ -164,9 +141,6 @@ in_section && /^RemoteAddress=/ {
 }' /home/pi/MMDVMHost/$DIRECTORIO)
 echo -n "${CIAN}  13)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
 echo ""
-
-
-
 
 echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
 txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/$DIRECTORIO`
@@ -378,8 +352,6 @@ var300port= sed -n '238p'  /home/pi/MMDVMHost/$DIRECTORIO;
 echo "$var300port"
 echo ""
 echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cambio${AMARILLO}"
-
-
 
 echo ""
 echo "${CIAN}   0)\33[1;34m Salir del script \33[1;31m OJO!! no salir con ctrl+c ni con la x"
