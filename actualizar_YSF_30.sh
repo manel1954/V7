@@ -38,6 +38,21 @@ sleep 3
 						sudo chmod 777 -R /home/pi/YSFClients/YSFGateway
 						sudo wget -O YSFHosts.txt http://register.ysfreflector.de/export_csv.php
 						wget -O FCSRooms.txt https://raw.githubusercontent.com/g4klx/YSFClients/master/YSFGateway/FCSRooms.txt 
+						
+
+			cd /home/pi/YSFClients/YSFGateway
+			#sudo wget -O YSFHosts.txt http://register.ysfreflector.de/export_csv.php
+            
+			curl https://dvref.com/downloads/YSFHosts-resolved.txt > /home/pi/YSFClients/YSFGateway/YSFHosts.txt
+			
+			
+			clear
+			echo "${VERDE}*********************************"
+					echo "* ACTUALIZANDO REFLECTORES YSF  *"
+					echo "*********************************"
+			sleep 3
+
+						
 						sleep 3
 						clear
 echo "${AMARILLO}"			
