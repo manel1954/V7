@@ -18,10 +18,10 @@ sed -i "14c YSF2DMR=OFF" /home/pi/status.ini
 sed -i "15c DMR2YSF=OFF" /home/pi/status.ini
 sed -i "16c DMR2NXDN=OFF" /home/pi/status.ini
 
-sudo chmod 777 -R /home/pi/MMDVMHost 
+#sudo chmod 777 -R /home/pi/MMDVMHost 
 
-cd /home/pi/$SCRIPTS_version
-git pull 
+#cd /home/pi/$SCRIPTS_version
+#git pull 
 
 #=================================================================================
 #pone todos los datos de DMR+ , Brandameiter, svxlink etc en panel_control.ini
