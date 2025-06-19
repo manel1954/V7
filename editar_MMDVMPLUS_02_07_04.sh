@@ -3,7 +3,6 @@ while true
 do
 clear
 
-  #Editor MMDVMBM.ini
 DIRECTORIO="MMDVMPLUS.ini"
 
 #Colores

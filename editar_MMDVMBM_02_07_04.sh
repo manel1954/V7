@@ -3,26 +3,7 @@ while true
 do
 clear
 
-  #Editor MMDVMBM.ini
 DIRECTORIO="MMDVMBM.ini"
-
-# Recoge datos para leer desde el panel de control
-indi=$(awk "NR==2" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$primero $indi" /home/pi/info_panel_control.ini
-ide=$(awk "NR==3" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$segundo $ide" /home/pi/info_panel_control.ini
-frec=$(awk "NR==13" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$tercero $frec" /home/pi/info_panel_control.ini
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 1`
-largo1=`expr $largo - 2`
-largo=`expr substr $master 1 $largo1`
-letra=c            
-linea_master=$largo$letra
-master=$(awk "NR==$linea_master" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$cuarto $master" /home/pi/info_panel_control.ini
 
 #Colores
 ROJO="\033[1;31m"

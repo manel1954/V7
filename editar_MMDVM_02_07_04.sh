@@ -1,82 +1,9 @@
 ﻿#!/bin/bash
-clear
 while true
 do
 clear
-  #Editor MMDVM.ini
+
 DIRECTORIO="MMDVM.ini"
-DIRECTORIO_copia="MMDVM.ini_copia"
-DIRECTORIO_copia2="MMDVM.ini_copia2"
-DIRECTORIO_copia3="MMDVM.ini_copia3"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para leer desde el panel de control
-primero="6c"
-segundo="7c"
-tercero="8c"
-cuarto="9c"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-primer="37c"
-segun="38c"
-tercer="39c"
-  #Lee los datos del fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-primer1="37c"
-segun1="38c"
-tercer1="39c"
-
-  #Editor MMDVMBM.ini
-#DIRECTORIO="MMDVMBM.ini"
-#DIRECTORIO_copia="MMDVMBM.ini_copia"
-#DIRECTORIO_copia2="MMDVMBM.ini_copia2"
-#DIRECTORIO_copia3="MMDVMBM.ini_copia3"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para leer desde el panel de control
-#primero="1c"
-#segundo="2c"
-#tercero="3c"
-#cuarto="4c"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer="34c"
-#segun="35c"
-#tercer="36c"
-  #Lee los datos del fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer1="34c"
-#segun1="35c"
-#tercer1="36c"
-
-  #Editor MMDVMPLUS.ini
-#DIRECTORIO="MMDVMPLUS.ini"
-#DIRECTORIO_copia="MMDVMPLUS.ini_copia"
-#DIRECTORIO_copia2="MMDVMPLUS.ini_copia2"
-#DIRECTORIO_copia3="MMDVMPLUS.ini_copia3"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para leer desde el panel de control
-#primero="11c"
-#segundo="12c"
-#tercero="13c"
-#cuarto="14c"
-  #Escribe datos en el fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer="31c"
-#segun="32c"
-#tercer="33c"
-  #Lee los datos del fichero /home/pi/info_panel_control.ini para las memorias M1, M2 y M3
-#primer1="31c"
-#segun1="32c"
-#tercer1="33c"
-
-# Recoge datos para leer desde el panel de control
-indi=$(awk "NR==2" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$primero $indi" /home/pi/info_panel_control.ini
-ide=$(awk "NR==3" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$segundo $ide" /home/pi/info_panel_control.ini
-frec=$(awk "NR==13" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$tercero $frec" /home/pi/info_panel_control.ini
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 1`
-largo1=`expr $largo - 2`
-largo=`expr substr $master 1 $largo1`
-letra=c            
-linea_master=$largo$letra
-master=$(awk "NR==$linea_master" /home/pi/MMDVMHost/$DIRECTORIO)
-sed -i "$cuarto $master" /home/pi/info_panel_control.ini
 
 #Colores
 ROJO="\033[1;31m"
@@ -148,43 +75,53 @@ echo "${CIAN}   8)${GRIS} Puerto para placa NTH/ZUM en arduino y Pincho Low Cost
 echo "${CIAN}   9)${GRIS} Puerto para DVMEGA + Bluestack conectado por USB a Raspberry Pi(ttyUSB0)${AMARILLO}"
 echo -n "                            - "
 
-mode=`grep -n -m 1 "^Port=" /home/pi/MMDVMHost/$DIRECTORIO`
-buscar=":"
-caracteres=`expr index $mode $buscar`
-caracteres_linea=`expr $caracteres - 1`
-numero_linea_port=`expr substr $mode 1 $caracteres_linea`
-mode=$(awk "NR==$numero_linea_port" /home/pi/MMDVMHost/$DIRECTORIO)
-echo "$mode"
+uartport=$(awk '
+/^\[Modem\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^UARTPort=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${uartport}\33[1;37m"
+echo ""
 
 echo -n "${CIAN}  10)${GRIS} Modificar ID          - ${AMARILLO}"
 idd=`grep -n "Id=" /home/pi/MMDVMHost/$DIRECTORIO`
 idd1=`expr substr $idd 3 30`
 echo "$idd1"
+remoteport=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemotePort=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  11)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteport}\33[1;37m"
+echo ""
 
-echo -n "${CIAN}  11)${GRIS} Modificar Address     - ${AMARILLO}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 1`
-largo1=`expr $largo - 2`
-master1=`expr substr $master $largo 40`
-largo=`expr substr $master 1 $largo1`
-letra=c            
-linea_master=$largo$letra
-echo "$master1"
+password=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^Password=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  12)${GRIS} Valor Password        - ${AMARILLO}${password}\33[1;37m"
+echo ""
 
-echo -n "${CIAN}  12)${GRIS} Modificar Puerto      - ${AMARILLO}"
-lineaport=`expr substr $master 1 $largo1`
-lineaport=`expr $lineaport + 1`
-linea3port=$lineaport
-letra=p
-linea2port=$lineaport$letra
-var100port= sed -n $linea2port  /home/pi/MMDVMHost/$DIRECTORIO;
-
-echo -n "${CIAN}  13)${GRIS} Modificar Password    - ${AMARILLO}"
-pas=`grep -n '\<Password\>' /home/pi/MMDVMHost/$DIRECTORIO`
-pas1=`expr substr $pas 5 30`
-echo "$pas1"
+remoteaddress=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemoteAddress=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  13)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
+echo ""
 
 echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
 txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/$DIRECTORIO`
@@ -392,51 +329,10 @@ numero_linea_jiter_letrac=$numero_linea$letrac
 echo "  ${CIAN}      k) ${GRIS}Jitter      - ${AMARILLO}$Jitter"
 
 echo -n "${CIAN}  27)${GRIS} Entra reflector DMR+  - ${AMARILLO}"
-OPCION=`expr substr $pas 1 $largo1`
-OPCION=`expr $OPCION + 1`
-linea33port=$OPCION
-letra=p
-linea22port=$OPCION$letra
-var300port= sed -n $linea22port  /home/pi/MMDVMHost/$DIRECTORIO;
-
+var300port= sed -n '238p'  /home/pi/MMDVMHost/$DIRECTORIO;
+echo "$var300port"
 echo ""
 echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cambio${AMARILLO}"
-
-echo "${CIAN}  29)\33[1;37m Guardar  fichero de Configuración en M1 ${CIAN}"
-echo -n "${CIAN}  30)\33[1;32m Utilizar fichero de Configuración de M1: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia1=`expr substr $master $largo 40`
-echo -n "$copia1"
-memoria1=$(awk "NR==$primer1" /home/pi/info_panel_control.ini)
-echo " - $memoria1"
-
-echo "${CIAN}  31)\33[1;37m Guardar  fichero de Configuración en M2: ${CIAN}"
-echo -n "${CIAN}  32)\33[1;32m Utilizar fichero de Configuración en M2: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia2`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia2=`expr substr $master $largo 40`
-echo -n "$copia2"
-memoria2=$(awk "NR==$segun1" /home/pi/info_panel_control.ini)
-echo " - $memoria2"
-
-echo "${CIAN}  33)\33[1;37m Guardar  fichero de Configuración en M3: ${CIAN}"
-echo -n "${CIAN}  34)\33[1;32m Utilizar fichero de Configuración en M3: ${CIAN}"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/$DIRECTORIO_copia3`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia3=`expr substr $master $largo 40`
-echo -n "$copia3"
-memoria3=$(awk "NR==$tercer1" /home/pi/info_panel_control.ini)
-echo " - $memoria3"
-
-echo ""
-echo "${CIAN}  35)\33[1;31m Recuperar el fichero original $DIRECTORIO${AMARILLO}"
 
 echo ""
 echo "${CIAN}   0)\33[1;34m Salir del script \33[1;31m OJO!! no salir con ctrl+c ni con la x"
@@ -537,8 +433,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -551,8 +446,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -561,12 +455,11 @@ done;;
 8) echo ""
 while true
 do
-                          actualizar=S 
+actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -575,13 +468,11 @@ done;;
 9) echo ""
 while true
 do
-                     
-                          actualizar=S 
+actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UartPort=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -612,65 +503,115 @@ do
 			                    break;;
 esac
 done;;
+
+
+
+
 11) echo ""
 while true
 do
-                      echo "Valor actual del Master: ${AMARILLO}${master#*=}\33[1;37m"
-                      read -p 'Brandmeister=master.spain-dmr.es / DMR+=212.237.3.141: ' master1
-                      actualizar=S 
-                      case $actualizar in
-                      [sS]* ) echo ""
-                      master1=`echo "$master1" | tr -d '[[:space:]]'`
-                      master1=`echo "$master1" | tr [:upper:] [:lower:]`
-                      sed -i "$linea_master Address=$master1" /home/pi/MMDVMHost/$DIRECTORIO
-                      sed -i "$cuarto Address=$master1" /home/pi/info_panel_control.ini
-                      break;;
-                      [nN]* ) echo ""
-                      break;;
-esac
+    # Buscar el valor actual de RemoteAddress en la sección [DMR Network]
+    remoteaddress=$(awk '
+    /^\[DMR Network\]/ {in_section=1; next}
+    /^\[/ {in_section=0}
+    in_section && /^RemotePort=/ {
+        split($0, a, "=")
+        print a[2]
+        exit
+    }' /home/pi/MMDVMHost/$DIRECTORIO)
+
+    echo "   Valor actual de RemotePort: ${AMARILLO}${remoteaddress}\33[1;37m"
+
+    read -p 'Introduce nuevo valor para RemotePort (ENTER para mantener el actual): ' nuevo_port
+
+    # Si no se introduce nada, se mantiene el actual
+    if [ -z "$nuevo_port" ]; then
+        echo "   No se ha modificado RemotePort."
+        break
+    fi
+
+    # Eliminar espacios por si acaso
+    nuevo_port=$(echo "$nuevo_port" | tr -d '[[:space:]]')
+
+    # Actualizar el valor en el archivo
+    sed -i "/^\[DMR Network\]/,/^\[/ s/^RemotePort=.*/RemotePort=$nuevo_port/" /home/pi/MMDVMHost/$DIRECTORIO
+
+    echo "   RemotePort actualizado a: ${AMARILLO}$nuevo_port\33[1;37m"
+    break
 done;;
+
+
+
+
 12) echo ""
 while true
 do
-                          echo -n "Valor actual del \33[1;37m${var100port#*=}\33[1;37m"
-                          var100port= sed -n $linea2port  /home/pi/MMDVMHost/$DIRECTORIO;
-                          read -p 'Puerto para Brandmeister=62031 puerto para DMR+=55555 : ' miid
-                          actualizar=S 
-                          case $actualizar in
-                          [sS]* ) echo ""
-                          letra1=c
-                          linea4=$linea3port$letra1
-                          sed -i "$linea4 Port=$miid" /home/pi/MMDVMHost/$DIRECTORIO
-                          break;;
-                          [nN]* ) echo ""
-                          break;;
-esac
+    # Buscar el valor actual de RemoteAddress en la sección [DMR Network]
+    password=$(awk '
+    /^\[DMR Network\]/ {in_section=1; next}
+    /^\[/ {in_section=0}
+    in_section && /^Password=/ {
+        split($0, a, "=")
+        print a[2]
+        exit
+    }' /home/pi/MMDVMHost/$DIRECTORIO)
+
+    echo "   Valor actual de Password: ${AMARILLO}${password}\33[1;37m"
+
+    read -p 'Introduce nuevo valor para Password (ENTER para mantener el actual): ' nuevo_password
+
+    # Si no se introduce nada, se mantiene el actual
+    if [ -z "$nuevo_password" ]; then
+        echo "   No se ha modificado Password."
+        break
+    fi
+
+    # Eliminar espacios por si acaso
+    nuevo_password=$(echo "$nuevo_password" | tr -d '[[:space:]]')
+
+    # Actualizar el valor en el archivo
+    sed -i "/^\[DMR Network\]/,/^\[/ s/^Password=.*/Password=$nuevo_password/" /home/pi/MMDVMHost/$DIRECTORIO
+
+    echo "   Password actualizado a: ${AMARILLO}$nuevo_password\33[1;37m"
+    break
 done;;
+
+
+
+
 13) echo ""
 while true
 do
-                          buscar=":"
-                          largo=`expr index $pas $buscar`
-                          echo "   Valor actual del Password: ${AMARILLO}${pas#*=}\33[1;37m"
-           	              read -p 'Brandmeister=passw0rd   DMR+=PASSWORD: ' pas1
-                          letra=c
-                          if [ $largo = 3 ]
-                          then
-                          linea=`expr substr $pas 1 2`
-                          else
-                          linea=`expr substr $pas 1 3`
-                          fi
-                          linea=$linea$letra
-                          actualizar=S 
-                          case $actualizar in
-			                    [sS]* ) echo ""
-			                    pas1=`echo "$pas1" | tr -d '[[:space:]]'`
-                          sed -i "$linea Password=$pas1" /home/pi/MMDVMHost/$DIRECTORIO
-			                    break;;
-			                    [nN]* ) echo ""
-			                    break;;
-esac
+    # Buscar el valor actual de RemoteAddress en la sección [DMR Network]
+    remoteaddress=$(awk '
+    /^\[DMR Network\]/ {in_section=1; next}
+    /^\[/ {in_section=0}
+    in_section && /^RemoteAddress=/ {
+        split($0, a, "=")
+        print a[2]
+        exit
+    }' /home/pi/MMDVMHost/$DIRECTORIO)
+
+    echo "   Valor actual de RemoteAddress: ${AMARILLO}${remoteaddress}\33[1;37m"
+
+    read -p 'Introduce nuevo valor para RemoteAddress (ENTER para mantener el actual): ' nuevo_address
+
+    # Si no se introduce nada, se mantiene el actual
+    if [ -z "$nuevo_address" ]; then
+        echo "   No se ha modificado RemoteAddress."
+        break
+    fi
+
+    # Eliminar espacios por si acaso
+    nuevo_port=$(echo "$nuevo_port" | tr -d '[[:space:]]')
+
+    # Actualizar el valor en el archivo
+    sed -i "/^\[DMR Network\]/,/^\[/ s/^RemoteAddress=.*/RemoteAddress=$nuevo_address/" /home/pi/MMDVMHost/$DIRECTORIO
+
+    echo "   RemoteAddress actualizado a: ${AMARILLO}$nuevo_address\33[1;37m"
+    break
 done;;
+
 14) echo ""
 while true
 do
@@ -701,7 +642,7 @@ do
                           buscar=":"
                           largo=`expr index $rx $buscar`
                           echo "Valor  actual  del  RXLevel : ${AMARILLO}${rx#*=}\33[1;37m"
-           	              read -p 'Valor óptimo depende de la emisora del DMO : ' var2
+                          read -p 'Valor óptimo (en mi caso) para DVMEGA=45, Low cost EA4AOJ=45, NANO BLAS=60 : ' var2
                           letra=c
                           if [ $largo = 3 ]
                           then
@@ -1201,14 +1142,12 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
 			                    read -p 'Intruduce reflector DMR+ al que se conectara (ej:4370) ' opcion
-                          letra1=c
-                          linea4=$linea33port$letra1
-                          sed -i "$linea4 Options=StartRef=$opcion;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "238c Options=StartRef=$opcion;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    letra1=c
-                          linea4=$linea33port$letra1
-			                    sed -i "$linea4 #Options=StartRef=4370;RelinkTime=10;" /home/pi/MMDVMHost/$DIRECTORIO
+                          linea4=$linea238port$letra1
+			                     sed -i "238c #Options=" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 esac
 done;;
@@ -1224,121 +1163,7 @@ do
 			                    break;;
 esac
 done;;
-29) echo ""
-while true
-do
-                        actualizar=S
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "Introduce nombre memoria máximo 10 caracteres"
-                        read memoria1
-                        echo "<<<<<< Haciendo copia de seguridad de la M1 >>>>>"
-                        sleep 3
-                        sed -i "$primer $memoria1" /home/pi/info_panel_control.ini
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO /home/pi/MMDVMHost/$DIRECTORIO_copia
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-30) echo ""
-while true
-do
-                        actualizar=S
-                        case $actualizar in
-                        [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando copia de seguridad de la M1 >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO_copia /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-31) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "Introduce nombre memoria máximo 10 caracteres"
-                        read memoria2
-                        echo "<<<<<< Haciendo copia de seguridad de la M2 >>>>>"
-                        sleep 3
-                        sed -i "$segun $memoria2" /home/pi/info_panel_control.ini
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO /home/pi/MMDVMHost/$DIRECTORIO_copia2
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-32) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando copia de seguridad  de la M2 >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO_copia2 /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-33) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "Introduce nombre memoria máximo 10 caracteres"
-                        read memoria3
-                        echo "<<<<<< Haciendo copia de seguridad de la M3 >>>>>"
-                        sleep 3
-                        sed -i "$tercer $memoria3" /home/pi/info_panel_control.ini
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO /home/pi/MMDVMHost/$DIRECTORIO_copia3
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-34) echo ""
-while true
-do
-                        actualizar=S 
-                        case $actualizar in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando copia de seguridad de la M3 >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/$DIRECTORIO_copia3 /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
-35) echo ""
-while true
-do
-          	        
-           	            read -p 'Quieres restaurar el fichero original MMDVM.ini? S/N ' restaurar1   
-                        case $restaurar1 in
-			                  [sS]* ) echo ""
-                        clear
-                        echo "<<<<<< Restaurando el fichero original $DIRECTORIO >>>>>"
-                        sleep 3
-                        sudo cp -f /home/pi/MMDVMHost/MMDVM.ini_original /home/pi/MMDVMHost/$DIRECTORIO
-			                  break;;
-			                  [nN]* ) echo ""
-			                  break;;
-esac
-done;;
+
 0) echo ""
 clear
 echo "${AMARILLO}   **************************************************"
