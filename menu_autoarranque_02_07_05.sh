@@ -66,16 +66,7 @@ bluedv=`grep "MMDVMBM" /home/pi/autoarranque_07.ini`
 
 
 
-echo -n "\33[1;36m   109)\33[1;37m  Quitar SVXLINK del autoarranque       - "
-SVXLINK=`grep "SVXLINK" /home/pi/autoarranque_07.ini`
-SVXLINK=`expr substr $SVXLINK 9 3`
-if [ $SVXLINK = "ON" ]
-then
-echo "\33[1;32m$SVXLINK"
-else
-echo "\33[1;31m"
-fi
-bluedv=`grep "SVXLINK" /home/pi/autoarranque_07.ini`
+
 
 
 
@@ -225,16 +216,7 @@ echo "\33[1;31m"
 fi
 bluedv=`grep "MMDVMBM" /home/pi/autoarranque_07.ini`
 
-echo -n "\33[1;36m   209)\33[1;33m  Poner SVXLINK en el autoarranque      - "
-SVXLINK=`grep "SVXLINK" /home/pi/autoarranque_07.ini`
-SVXLINK=`expr substr $SVXLINK 9 3`
-if [ $SVXLINK = "OFF" ]
-then
-echo "\33[1;31m$SVXLINK"
-else
-echo "\33[1;31m"
-fi
-bluedv=`grep "SVXLINK" /home/pi/autoarranque_07.ini`
+
 
 
 
@@ -331,12 +313,9 @@ trans=`grep "NXDN" /home/pi/autoarranque_07.ini`
 
 
 
-echo "\33[0m "
-echo "\33[1;36m    27)\33[1;32m *** RESTABLECER LOS AUTOARRANQUES A ${RED}OFF ${VERDE}***"
-echo ""
 
-echo "\33[1;36m    28)\33[1;31m *** REINICIAR LA RASPBERRY PI ***"
-echo ""
+
+
 echo "\33[1;36m     0)\33[1;34m Salir del script \33[1;31m OJO!! no salir con ctrl+c ni con la x"
 echo ""
 echo -n "\33[1;36m   Por favor, elige una opción: " 
@@ -419,23 +398,7 @@ clear
                         break;;
 esac
 done;;
-109) echo ""
-while true
-do
-clear	        
-		  actualizar=S
-		  case $actualizar in
-			[sS]* ) echo ""
-			echo "Quitando SVXLINK del autoarranque >>>>>"
-      sleep 2
-      cd /home/pi/.config/autostart
-      mv SVXLINK.desktop /home/pi/AUTOARRANQUEV7
-			sed -i "8c SVXLINK=OFF" /home/pi/autoarranque_07.ini
-			break;;
-			[nN]* ) echo ""
-			break;;
-esac
-done;;
+
 110) echo ""
 while true
 do
@@ -611,23 +574,7 @@ clear
                         break;;
 esac
 done;;
-209) echo ""
-while true
-do
-clear
-		              actualizar=S
-		              case $actualizar in
-			            [sS]* ) echo ""
-			            echo "Poniendo SVXLINK en el autoarranque >>>>>"
-                  sleep 2
-                  cd /home/pi/AUTOARRANQUEV7
-                  mv SVXLINK.desktop /home/pi/.config/autostart
-			            sed -i "8c SVXLINK=ON" /home/pi/autoarranque_07.ini
-			            break;;
-			            [nN]* ) echo ""
-			            break;;
-esac
-done;;
+
 210) echo ""
 while true
 do
@@ -732,94 +679,8 @@ clear
                                             break;;
 esac
 done;;
-27) echo ""
-while true
-do
-clear
-                        echo "\33[1;31m" #color rojo
-                        echo " *****************************************************"
-                        echo " ** OJO!! ESTO PONDRÁ TODOS LOS AUTOARRANQUES EN OFF *"
-                        echo " *****************************************************"
-                        echo "\33[1;37m" #color
-                        read -p 'Quieres seguir? S/N: ' ejecutar1
-                        case $ejecutar1 in
-                        [sS]* ) echo ""
-                        echo ">>>>>>>>> RESTABLECIENDO TODOS LOS AUTOARRANQUES EN OFF  >>>>>"
-                        #cd /home/pi/V30
-                        #git pull
-                        #cp -f /home/pi/V30/autoarranque_07.ini /home/pi/
-                        sleep 2
-                        cd /home/pi/.config/autostart
-
-                        mv IRCDDB.desktop /home/pi/AUTOARRANQUEV7
-                        mv BM.desktop /home/pi/AUTOARRANQUEV7
-                        mv BLUEDV.desktop /home/pi/AUTOARRANQUEV7
-                        mv YSF.desktop /home/pi/AUTOARRANQUEV7 
-                        mv DV4MINI.desktop /home/pi/AUTOARRANQUEV7
-                        mv RADIO.desktop /home/pi/AUTOARRANQUEV7
-                        mv DMRPLUS.desktop /home/pi/AUTOARRANQUEV7
-                        mv LIBRE.desktop /home/pi/AUTOARRANQUEV7
-                        mv SVXLINK.desktop /home/pi/AUTOARRANQUEV7
-                        mv DSTARSOLO_05.desktop /home/pi/AUTOARRANQUEV7
-                        mv FUSIONSOLO.desktop /home/pi/AUTOARRANQUEV7
-                        mv DVRPTR.desktop /home/pi/AUTOARRANQUEV7
-                        mv YSF2DMR.desktop /home/pi/AUTOARRANQUEV7
-                        mv dstarrepeater.desktop /home/pi/AUTOARRANQUEV7
-                        mv AMBE_SERVER.desktop /home/pi/AUTOARRANQUEV7
-                        mv DMR2YSF.desktop /home/pi/AUTOARRANQUEV7
-                        mv DMR2NXDN.desktop /home/pi/AUTOARRANQUEV7
-
-sed -i "1c D-STAR=OFF" /home/pi/autoarranque_07.ini
-sed -i "2c BlueDV=OFF" /home/pi/autoarranque_07.ini
-sed -i "3c C4F=OFF" /home/pi/autoarranque_07.ini
-sed -i "4c DV4mini=OFF" /home/pi/autoarranque_07.ini
-sed -i "5c MMDVMPLACA=OFF" /home/pi/autoarranque_07.ini
-sed -i "6c MMDVMPLUS=OFF" /home/pi/autoarranque_07.ini
-sed -i "7c MMDVMBM=OFF" /home/pi/autoarranque_07.ini
-sed -i "8c SVXLINK=OFF" /home/pi/autoarranque_07.ini
-sed -i "9c dstarrepeater=OFF" /home/pi/autoarranque_07.ini
-sed -i "10c MMDVMLIBRE=OFF" /home/pi/autoarranque_07.ini
-sed -i "11c SOLO_DSTAR=OFF" /home/pi/autoarranque_07.ini
-sed -i "12c SOLO_FUSION=OFF" /home/pi/autoarranque_07.ini
-sed -i "13c DVRPTR=OFF" /home/pi/autoarranque_07.ini
-sed -i "14c AMBE_SERVER=OFF" /home/pi/autoarranque_07.ini
-sed -i "15c F2DMR=OFF" /home/pi/autoarranque_07.ini
-sed -i "16c DMR2YSF=OFF" /home/pi/autoarranque_07.ini
-sed -i "17c NXDN=OFF" /home/pi/autoarranque_07.ini
 
 
-
-                        exit;
-                        break;;
-                        [nN]* ) echo ""
-clear
-exit;
-break;;
-esac
-done;;
-28) echo ""
-while true
-do
-clear
-echo " \33[1;31m  ************************************************************"
-echo "   *                                                          *"
-echo "   *     OJO!!   SE VA A REINICIAR LA RASPBERRY PI            *"
-echo "   *                                                          *"
-echo "   ************************************************************"
-echo ""
-                read -p '   Estás seguro de querer reiniciar ? Si/No: ' ejecutar13
-                    case $ejecutar13 in
-                        [sS]* ) echo ""
-                        echo "ok >>>>>"
-                        sudo reboot
-                        echo ""
-                        echo "Ok, se ha ejecutado correctamente"
-                        echo ""
-                        break;;
-                        [nN]* ) echo ""
-                        break;;
-esac
-done;;
 0) echo "."
 clear
 sudo chmod +x -R /home/pi/.config/autostart
