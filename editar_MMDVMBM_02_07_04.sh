@@ -381,14 +381,16 @@ echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cam
 
 echo "${CIAN}  29)\33[1;37m Guardar  fichero de Configuración en M1 ${CIAN}"
 echo -n "${CIAN}  30)\33[1;32m Utilizar fichero de Configuración de M1: ${CIAN}"
-master=`grep -n -m 1 "^RemoteAddress=" /home/pi/MMDVMHost/$DIRECTORIO_copia`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia1=`expr substr $master $largo 40`
-echo -n "$copia1"
-memoria1=$(awk "NR==$primer1" /home/pi/info_panel_control.ini)
-echo " - $memoria1"
+remoteaddress=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemoteAddress=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  30)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
+echo ""
 
 echo "${CIAN}  31)\33[1;37m Guardar  fichero de Configuración en M2: ${CIAN}"
 echo -n "${CIAN}  32)\33[1;32m Utilizar fichero de Configuración en M2: ${CIAN}"
