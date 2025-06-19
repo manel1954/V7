@@ -581,40 +581,6 @@ do
 			                    break;;
 esac
 done;;
-11) echo ""
-while true
-do
-                      echo "Valor actual del Master: ${AMARILLO}${master#*=}\33[1;37m"
-                      read -p 'Brandmeister=master.spain-dmr.es / DMR+=212.237.3.141: ' master1
-                      actualizar=S 
-                      case $actualizar in
-                      [sS]* ) echo ""
-                      master1=`echo "$master1" | tr -d '[[:space:]]'`
-                      master1=`echo "$master1" | tr [:upper:] [:lower:]`
-                      sed -i "$linea_master Address=$master1" /home/pi/MMDVMHost/$DIRECTORIO
-                      sed -i "$cuarto Address=$master1" /home/pi/info_panel_control.ini
-                      break;;
-                      [nN]* ) echo ""
-                      break;;
-esac
-done;;
-12) echo ""
-while true
-do
-                          echo -n "Valor actual del \33[1;37m${var100port#*=}\33[1;37m"
-                          var100port= sed -n $linea2port  /home/pi/MMDVMHost/$DIRECTORIO;
-                          read -p 'Puerto para Brandmeister=62031 puerto para DMR+=55555 : ' miid
-                          actualizar=S 
-                          case $actualizar in
-                          [sS]* ) echo ""
-                          letra1=c
-                          linea4=$linea3port$letra1
-                          sed -i "$linea4 Port=$miid" /home/pi/MMDVMHost/$DIRECTORIO
-                          break;;
-                          [nN]* ) echo ""
-                          break;;
-esac
-done;;
 
 
 
