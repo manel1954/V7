@@ -394,25 +394,29 @@ echo ""
 
 echo "${CIAN}  31)\33[1;37m Guardar  fichero de Configuración en M2: ${CIAN}"
 echo -n "${CIAN}  32)\33[1;32m Utilizar fichero de Configuración en M2: ${CIAN}"
-master=`grep -n -m 1 "^RemoteAddress=" /home/pi/MMDVMHost/$DIRECTORIO_copia2`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia2=`expr substr $master $largo 40`
-echo -n "$copia2"
-memoria2=$(awk "NR==$segun1" /home/pi/info_panel_control.ini)
-echo " - $memoria2"
+remoteaddress=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemoteAddress=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  ${AMARILLO}${remoteaddress}\33[1;37m"
+echo ""
 
 echo "${CIAN}  33)\33[1;37m Guardar  fichero de Configuración en M3: ${CIAN}"
 echo -n "${CIAN}  34)\33[1;32m Utilizar fichero de Configuración en M3: ${CIAN}"
-master=`grep -n -m 1 "^RemoteAddress=" /home/pi/MMDVMHost/$DIRECTORIO_copia3`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 9`
-copia3=`expr substr $master $largo 40`
-echo -n "$copia3"
-memoria3=$(awk "NR==$tercer1" /home/pi/info_panel_control.ini)
-echo " - $memoria3"
+remoteaddress=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemoteAddress=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  ${AMARILLO}${remoteaddress}\33[1;37m"
+echo ""
 
 echo ""
 echo "${CIAN}   0)\33[1;34m Salir del script \33[1;31m OJO!! no salir con ctrl+c ni con la x"
