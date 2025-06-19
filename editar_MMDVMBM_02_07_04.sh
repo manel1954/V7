@@ -78,7 +78,7 @@ echo -n "                            - "
 uartport=$(awk '
 /^\[Modem\]/ {in_section=1; next}
 /^\[/ {in_section=0}
-in_section && /^UARTPort=/ {
+in_section && /^UartPort=/ {
     split($0, a, "=")
     print a[2]
     exit
