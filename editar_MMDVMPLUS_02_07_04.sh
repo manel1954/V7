@@ -149,7 +149,7 @@ in_section && /^Password=/ {
     print a[2]
     exit
 }' /home/pi/MMDVMHost/$DIRECTORIO)
-echo -n "${CIAN}  12)${GRIS} Valor Password      - ${AMARILLO}${password}\33[1;37m"
+echo -n "${CIAN}  12)${GRIS} Valor Password        - ${AMARILLO}${password}\33[1;37m"
 echo ""
 
 
@@ -655,7 +655,38 @@ done;;
 
 
 
+12) echo ""
+while true
+do
+    # Buscar el valor actual de RemoteAddress en la sección [DMR Network]
+    password=$(awk '
+    /^\[DMR Network\]/ {in_section=1; next}
+    /^\[/ {in_section=0}
+    in_section && /^Password=/ {
+        split($0, a, "=")
+        print a[2]
+        exit
+    }' /home/pi/MMDVMHost/$DIRECTORIO)
 
+    echo "   Valor actual de Password: ${AMARILLO}${password}\33[1;37m"
+
+    read -p 'Introduce nuevo valor para Password (ENTER para mantener el actual): ' nuevo_password
+
+    # Si no se introduce nada, se mantiene el actual
+    if [ -z "$nuevo_password" ]; then
+        echo "   No se ha modificado Password."
+        break
+    fi
+
+    # Eliminar espacios por si acaso
+    nuevo_password=$(echo "$nuevo_password" | tr -d '[[:space:]]')
+
+    # Actualizar el valor en el archivo
+    sed -i "/^\[DMR Network\]/,/^\[/ s/^Password=.*/Password=$nuevo_password/" /home/pi/MMDVMHost/$DIRECTORIO
+
+    echo "   Password actualizado a: ${AMARILLO}$nuevo_password\33[1;37m"
+    break
+done;;
 
 
 
