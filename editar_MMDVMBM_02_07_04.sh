@@ -389,7 +389,7 @@ in_section && /^RemoteAddress=/ {
     print a[2]
     exit
 }' /home/pi/MMDVMHost/$DIRECTORIO)
-echo -n "${CIAN}  30)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
+echo -n "${CIAN}  ${AMARILLO}${remoteaddress}\33[1;37m"
 echo ""
 
 echo "${CIAN}  31)\33[1;37m Guardar  fichero de Configuración en M2: ${CIAN}"
