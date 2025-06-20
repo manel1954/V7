@@ -29,37 +29,26 @@ clear
 		    			case $ejecutar1 in
 			            [sS]* ) echo ""
 			            echo "${VERDE}"
-clear
-echo "*************************************"
-echo "* ACTUALIZANDO LISTADO DE SALAS YSF *"
-echo "* ***********************************"
-sleep 3
+						clear
+						echo "*************************************"
+						echo "* ACTUALIZANDO LISTADO DE SALAS YSF *"
+						echo "* ***********************************"
+						sleep 3
 						cd /home/pi/YSFClients/YSFGateway
 						sudo chmod 777 -R /home/pi/YSFClients/YSFGateway
-						sudo wget -O YSFHosts.txt http://register.ysfreflector.de/export_csv.php
 						wget -O FCSRooms.txt https://raw.githubusercontent.com/g4klx/YSFClients/master/YSFGateway/FCSRooms.txt 
-						
-
-			cd /home/pi/YSFClients/YSFGateway
-			#sudo wget -O YSFHosts.txt http://register.ysfreflector.de/export_csv.php
-            
-			curl https://dvref.com/downloads/YSFHosts-resolved.txt > /home/pi/YSFClients/YSFGateway/YSFHosts.txt
-			
-			
-			clear
-			echo "${VERDE}*********************************"
-					echo "* ACTUALIZANDO REFLECTORES YSF  *"
-					echo "*********************************"
-			sleep 3
-
-						
+						        
+						curl https://dvref.com/downloads/YSFHosts-resolved.txt > /home/pi/YSFClients/YSFGateway/YSFHosts.txt
+						echo "${VERDE}*********************************"
+						echo "* ACTUALIZANDO REFLECTORES YSF  *"
+						echo "*********************************"						
 						sleep 3
 						clear
-echo "${AMARILLO}"			
-echo "*************************************************************"
-echo "* Los fichero YSFHost.txt y FCSRooms.txt se han actualizado *"
-echo "*************************************************************"
-sleep 3
+						echo "${AMARILLO}"			
+						echo "*************************************************************"
+						echo "* Los fichero YSFHost.txt y FCSRooms.txt se han actualizado *"
+						echo "*************************************************************"
+						sleep 3
 		                break;;
 						[nN]* ) echo ""
 						clear
