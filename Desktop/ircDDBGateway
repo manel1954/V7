@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+TryExec=lxterminal
+Exec=sh -c 'cd /home/pi/V7; sudo sh ejecutar_d-star_30.sh'
+Icon=/home/pi/V7/DSTAR.png
+Type=Application
+StartupNotify=false
+Categories=GTK;Utility;TerminalEmulator;
+Terminal=false
+Name[es_ES]=Abrir ircDDB
+Hidden=false
+Comment[es_ES]=EA3EIZ
+#
