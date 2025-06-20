@@ -78,7 +78,7 @@ echo -n "                            - "
 uartport=$(awk '
 /^\[Modem\]/ {in_section=1; next}
 /^\[/ {in_section=0}
-in_section && /^UartPort=/ {
+in_section && /^UARTPort=/ {
     split($0, a, "=")
     print a[2]
     exit
@@ -554,13 +554,12 @@ while true
 do
                           actualizar=S 
                           case $actualizar in
-			                    [sS]* ) echo ""                       
+			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyAMA0" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini
-			  break;;
-			  [nN]* ) echo ""
-			  break;;
+                          sed -i "51c UARTPort=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
+			                    break;;
+			                    [nN]* ) echo ""
+			                    break;;
 esac
 done;;
 7) echo ""
@@ -570,40 +569,36 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyACM0" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini
-			  break;;
-			  [nN]* ) echo ""
-			  break;;
+                          sed -i "51c UARTPort=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
+			                    break;;
+			                    [nN]* ) echo ""
+			                    break;;
 esac
 done;;
 8) echo ""
 while true
 do
-                          actualizar=S 
+actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyACM1" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini
-			  break;;
-			  [nN]* ) echo ""
-			  break;;
+                          sed -i "51c UARTPort=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
+			                    break;;
+			                    [nN]* ) echo ""
+			                    break;;
 esac
 done;;
 9) echo ""
 while true
 do
-                     
-                          actualizar=S 
+actualizar=S 
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          numero_linea_port=$numero_linea_port$letrac
-                          sed -i "$numero_linea_port Port=/dev/ttyUSB0" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini
-			  break;;
-			  [nN]* ) echo ""
-			  break;;
+                          sed -i "51c UARTPort=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
+			                    break;;
+			                    [nN]* ) echo ""
+			                    break;;
 esac
 done;;
 

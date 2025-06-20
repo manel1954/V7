@@ -78,7 +78,7 @@ echo -n "                            - "
 uartport=$(awk '
 /^\[Modem\]/ {in_section=1; next}
 /^\[/ {in_section=0}
-in_section && /^UartPort=/ {
+in_section && /^UARTPort=/ {
     split($0, a, "=")
     print a[2]
     exit
@@ -433,7 +433,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UARTPort=/dev/ttyAMA0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -446,7 +446,7 @@ do
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UARTPort=/dev/ttyACM0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -459,7 +459,7 @@ actualizar=S
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UARTPort=/dev/ttyACM1" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
@@ -472,7 +472,7 @@ actualizar=S
                           case $actualizar in
 			                    [sS]* ) echo ""
                           letrac=c
-                          sed -i "51c UartPort=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
+                          sed -i "51c UARTPort=/dev/ttyUSB0" /home/pi/MMDVMHost/$DIRECTORIO
 			                    break;;
 			                    [nN]* ) echo ""
 			                    break;;
