@@ -157,7 +157,7 @@ buscar=":"
 largo_linea=`expr index $var2 $buscar`
 largo_linea=`expr $largo_linea - 1`
 numero_linea=`expr substr $var2 1 $largo_linea`
-numero_linea=`expr $numero_linea + 5` # y le suma uno qudando coomo: (75)
+numero_linea=`expr $numero_linea + 6` # y le suma uno qudando coomo: (75)
 OPTIONS=$(awk "NR==$numero_linea" $usuario/YSFClients/YSFGateway/YSFGateway.ini)
 letra=c
 linea_sed_OPTIONS=$numero_linea$letra
