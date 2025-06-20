@@ -2,7 +2,10 @@
 while true
 do
 clear
-SCRIPTS_version=$(awk "NR==1" /home/pi/.config/autostart/version)
+
+DIRECTORIO="MMDVMDMR2NXDN.ini"
+
+#Colores
 ROJO="\033[1;31m"
 VERDE="\033[1;32m"
 BLANCO="\033[1;37m"
@@ -11,273 +14,326 @@ CIAN="\033[1;36m"
 GRIS="\033[0m"
 echo "${VERDE}"
 echo "   **************************************************************************"
-echo "   *          Script para Modificar MMDVMDMR2NXDN.ini          \33[1;31m by EA3EIZ\33[1;32m   *"
+echo "              Script para Modificar $DIRECTORIO             \33[1;31m by EA3EIZ\33[1;32m   "
 echo "   **************************************************************************"
-echo -n "\33[1;36m   1)\33[0m Modificar indicativo  - \33[1;33m"
-ind=`grep -n -m 1 "Callsign" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-ind1=`expr substr $ind 3 30`
-echo "${VERDE}$ind1"
+echo -n "${CIAN}   1)${GRIS} Modificar indicativo  - ${AMARILLO}"
+ind=`grep -n "^Callsign=" /home/pi/MMDVMHost/$DIRECTORIO`
+indi1=`echo "$ind" | tr -d '[[:space:]]'`
+buscar=":"
+largo_linea=`expr index $indi1 $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $indi1 1 $largo_linea`
+letrac=c
+numero_linea_indi=$numero_linea$letrac
+contenido_indicativo=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
+echo "$contenido_indicativo"
 
-echo -n "\33[1;36m   2)\33[0m Modificar RXFrequency - \33[1;33m"
-rxf=`grep -n "RXFrequency" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-rxf1=`expr substr $rxf 4 30`
-echo "${VERDE}$rxf1"
+echo -n "${CIAN}   2)${GRIS} Modificar RXFrequency - ${AMARILLO}"
+rxf=`grep -n "^RXFrequency=" /home/pi/MMDVMHost/$DIRECTORIO`
+rxf1=`echo "$rxf" | tr -d '[[:space:]]'`
+buscar=":"
+largo_linea=`expr index $rxf1 $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $rxf1 1 $largo_linea`
+letrac=c
+numero_linea_rxf=$numero_linea$letrac
+contenido_rxf=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
+echo "$contenido_rxf"
 
-echo -n "\33[1;36m   3)\33[0m Modificar TXFrequency - \33[1;33m"
-txf=`grep -n "TXFrequency" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-txf1=`expr substr $txf 4 30`
-echo "${VERDE}$txf1"
+echo -n "${CIAN}   3)${GRIS} Modificar TXFrequency - ${AMARILLO}"
+txf=`grep -n "^TXFrequency=" /home/pi/MMDVMHost/$DIRECTORIO`
+txf1=`echo "$txf" | tr -d '[[:space:]]'`
+buscar=":"
+largo_linea=`expr index $txf1 $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $txf1 1 $largo_linea`
+letrac=c
+numero_linea_txf=$numero_linea$letrac
+contenido_txf=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
+echo "$contenido_txf"
 
-echo -n "\33[1;36m   4)\33[0m Modificar Location    - \33[1;33m"
-loca=`grep -n "Locatio" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-loca1=`expr substr $loca 4 30`
-echo "$loca1"
+echo -n "${CIAN}   4)${GRIS} Modificar Location    - ${AMARILLO}"
+loc=`grep -n "^Location=" /home/pi/MMDVMHost/$DIRECTORIO`
+loc1=`echo "$loc" | tr -d '[[:space:]]'`
+buscar=":"
+largo_linea=`expr index $loc1 $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $loc1 1 $largo_linea`
+letrac=c
+numero_linea_letrac=$numero_linea$letrac
+contenido_location=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
+echo "$contenido_location"
 
-echo -n "\33[1;36m   5)\33[0m Modificar URL         - \33[1;33m"
-url=`grep -n "URL" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}   5)${GRIS} Modificar URL         - ${AMARILLO}"
+url=`grep -n "URL" /home/pi/MMDVMHost/$DIRECTORIO`
 url1=`expr substr $url 4 30`
 echo "$url1"
 
-echo "\33[1;36m   6)\33[0m Puerto para DVMEGA pinchado en Raspberri PI (ttyAMA0)\33[1;33m"
-echo "\33[1;36m   7)\33[0m Puerto para placa NTH/ZUM en arduino y Pincho Low Cost (ttyACM0)\33[1;33m"
-echo "\33[1;36m   8)\33[0m Puerto para placa NTH/ZUM en arduino y Pincho Low Cost (ttyACM1)\33[1;33m"
-echo "\33[1;36m   9)\33[0m Puerto para DVMEGA + Bluestack conectado por USB a Raspberry Pi(ttyUSB0)\33[1;33m"
+echo "${CIAN}   6)${GRIS} Puerto para DVMEGA pinchado en Raspberri PI (ttyAMA0)${AMARILLO}"
+echo "${CIAN}   7)${GRIS} Puerto para placa NTH/ZUM en arduino y Pincho Low Cost (ttyACM0)${AMARILLO}"
+echo "${CIAN}   8)${GRIS} Puerto para placa NTH/ZUM en arduino y Pincho Low Cost (ttyACM1)${AMARILLO}"
+echo "${CIAN}   9)${GRIS} Puerto para DVMEGA + Bluestack conectado por USB a Raspberry Pi(ttyUSB0)${AMARILLO}"
 echo -n "                            - "
 
-mode=`grep -n -m 1 "^Port=" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-buscar=":"
-caracteres=`expr index $mode $buscar`
-caracteres_linea=`expr $caracteres - 1`
-numero_linea_port=`expr substr $mode 1 $caracteres_linea`
-mode=$(awk "NR==$numero_linea_port" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini)
-echo "$mode"
+uartport=$(awk '
+/^\[Modem\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^UartPort=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${uartport}\33[1;37m"
+echo ""
 
-echo -n "\33[1;36m  10)\33[0m Modificar ID          - \33[1;33m"
-idd=`grep -n "Id=" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  10)${GRIS} Modificar ID          - ${AMARILLO}"
+idd=`grep -n "Id=" /home/pi/MMDVMHost/$DIRECTORIO`
 idd1=`expr substr $idd 3 30`
-echo "${VERDE}$idd1"
+echo "$idd1"
+remoteport=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemotePort=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  11)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteport}\33[1;37m"
+echo ""
 
-echo -n "\33[1;36m  11)\33[0m Modificar Address     - \33[1;33m"
-master=`grep -n -m 1 "^Address=" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-buscar=":"
-largo=`expr index $master $buscar`
-largo=`expr $largo + 1`
-largo1=`expr $largo - 2`
-master1=`expr substr $master $largo 40`
-largo=`expr substr $master 1 $largo1`
-letra=c            
-linea_master=$largo$letra
-echo "${VERDE}$master1"
+password=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^Password=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  12)${GRIS} Valor Password        - ${AMARILLO}${password}\33[1;37m"
+echo ""
 
-echo -n "\33[1;36m  12)\33[0m Modificar Puerto      - \033[1;32m"
-lineaport=`expr substr $master 1 $largo1`
-lineaport=`expr $lineaport + 1`
-linea3port=$lineaport
-letra=p
-linea2port=$lineaport$letra
-var100port= sed -n $linea2port  /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini;
+remoteaddress=$(awk '
+/^\[DMR Network\]/ {in_section=1; next}
+/^\[/ {in_section=0}
+in_section && /^RemoteAddress=/ {
+    split($0, a, "=")
+    print a[2]
+    exit
+}' /home/pi/MMDVMHost/$DIRECTORIO)
+echo -n "${CIAN}  13)${GRIS} Valor RemotePort      - ${AMARILLO}${remoteaddress}\33[1;37m"
+echo ""
 
-echo -n "\33[1;36m  13)\33[0m Modificar Password    - \33[1;33m"
-pas=`grep -n '\<Password\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-pas1=`expr substr $pas 5 30`
-echo "$pas1"
-
-echo -n "\33[1;36m  14)\33[0m Modificar TXInvert    - \33[1;33m"
-txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  14)${GRIS} Modificar TXInvert    - ${AMARILLO}"
+txinv=`grep -n '\<TXInvert\>' /home/pi/MMDVMHost/$DIRECTORIO`
 txinv1=`expr substr $txinv 4 30`
 echo -n "$txinv1"
 
-echo -n "\33[1;36m      a)\33[0m D-STAR      - \33[1;33m"
-dstar=`grep -n "\[D-Star\]" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini` # devuelve ejem: 74:Enable=1
+echo -n "${CIAN}      a)${GRIS} D-STAR      - ${AMARILLO}"
+dstar=`grep -n "\[D-Star\]" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
-largo_linea=`expr index $dstar $buscar` #comprueba el largo incluyendo los dos puntos (:)
-largo_linea=`expr $largo_linea - 1` #comprueba el largo quitando los dos puntos (:)
-numero_linea=`expr substr $dstar 1 $largo_linea` # recoge el numero de linea (74)
-numero_linea_dstar=`expr $numero_linea + 1` # y le suma uno qudando coomo: (75)
+largo_linea=`expr index $dstar $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $dstar 1 $largo_linea`
+numero_linea_dstar=`expr $numero_linea + 1`
 letra=p
-numero_linea_dstar_letrap=$numero_linea_dstar$letra #crea 74p
+numero_linea_dstar_letrap=$numero_linea_dstar$letra
 letrac=c
-numero_linea_dstar_letrac=$numero_linea_dstar$letrac #crea 74c
-presentar_valo= sed -n $numero_linea_dstar_letrap  /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini; #presenta el valor en pantalla
+numero_linea_dstar_letrac=$numero_linea_dstar$letrac
+presentar_valo= sed -n $numero_linea_dstar_letrap  /home/pi/MMDVMHost/$DIRECTORIO;
 
-echo -n "\33[1;36m  15)\33[0m Modificar RXLevel     - \33[1;33m"
-rx=`grep -n '\<RXLevel\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  15)${GRIS} Modificar RXLevel     - ${AMARILLO}"
+rx=`grep -n '\<RXLevel\>' /home/pi/MMDVMHost/$DIRECTORIO`
 rx1=`expr substr $rx 4 30`
 echo -n "$rx1"
 
-echo -n "\33[1;36m      b)\33[0m DMR         - \33[1;33m"
-dmr=`grep -n "\[DMR\]" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini` # devuelve ejem: 74:Enable=1
+echo -n "${CIAN}      b)${GRIS} DMR         - ${AMARILLO}"
+dmr=`grep -n "\[DMR\]" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
-largo_linea=`expr index $dmr $buscar` #comprueba el largo incluyendo los dos puntos (:)
-largo_linea=`expr $largo_linea - 1` #comprueba el largo quitando los dos puntos (:)
-numero_linea=`expr substr $dmr 1 $largo_linea` # recoge el numero de linea (74)
-numero_linea_dmr=`expr $numero_linea + 1` # y le suma uno qudando coomo: (75)
+largo_linea=`expr index $dmr $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $dmr 1 $largo_linea`
+numero_linea_dmr=`expr $numero_linea + 1`
 letra=p
 numero_linea_dmr_letrap=$numero_linea_dmr$letra #crea 74p
 letrac=c
 numero_linea_dmr_letrac=$numero_linea_dmr$letrac #crea 74c
-presentar_valor= sed -n $numero_linea_dmr_letrap  /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini; #presenta el valor en pantalla
+presentar_valor= sed -n $numero_linea_dmr_letrap  /home/pi/MMDVMHost/$DIRECTORIO;
 
-echo -n "\33[1;36m  16)\33[0m Modificar TXLevel     - \33[1;33m"
-tx=`grep -n -m 1 '\<TXLevel\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  16)${GRIS} Modificar TXLevel     - ${AMARILLO}"
+tx=`grep -n -m 1 '\<TXLevel\>' /home/pi/MMDVMHost/$DIRECTORIO`
 tx1=`expr substr $tx 4 30`
 echo -n "$tx1"
 
-echo -n "\33[1;36m      c)\33[0m FUSION      - \33[1;33m"
-fusion=`grep -n "LowDeviation" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini` # devuelve ejem: 74:Enable=1
+echo -n "${CIAN}      c)${GRIS} FUSION      - ${AMARILLO}"
+fusion=`grep -n "LowDeviation" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
-largo_linea=`expr index $fusion $buscar` #comprueba el largo incluyendo los dos puntos (:)
-largo_linea=`expr $largo_linea - 1` #comprueba el largo quitando los dos puntos (:)
-numero_linea=`expr substr $fusion 1 $largo_linea` # recoge el numero de linea ejemplo (74)
-numero_linea_fusion=`expr $numero_linea - 1` # y le resta uno quedando como: ejemplo (73)
+largo_linea=`expr index $fusion $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $fusion 1 $largo_linea`
+numero_linea_fusion=`expr $numero_linea - 1`
 letra=p
-numero_linea_fusion_letrap=$numero_linea_fusion$letra #crea 74p
+numero_linea_fusion_letrap=$numero_linea_fusion$letra
 letrac=c
-numero_linea_fusion_letrac=$numero_linea_fusion$letrac #crea 74c
-presentar_valor= sed -n $numero_linea_fusion_letrap  /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini; #presenta el valor en pantalla
+numero_linea_fusion_letrac=$numero_linea_fusion$letrac
+presentar_valor= sed -n $numero_linea_fusion_letrap  /home/pi/MMDVMHost/$DIRECTORIO;
 
-echo -n "\33[1;36m  17)\33[0m Modificar Duplex      - \33[1;33m"
-dup=`grep -n -m 1 '\<Duplex\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  17)${GRIS} Modificar Duplex      - ${AMARILLO}"
+dup=`grep -n -m 1 '\<Duplex\>' /home/pi/MMDVMHost/$DIRECTORIO`
 dup1=`expr substr $dup 3 30`
 echo -n "$dup1"
 
-echo -n "\33[1;36m        d)\33[0m P25         - \33[1;33m"
-p25=`grep -n "\[P25\]" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini` # devuelve ejem: 74:Enable=1
+echo -n "${CIAN}        d)${GRIS} P25         - ${AMARILLO}"
+p25=`grep -n "\[P25\]" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
-largo_linea=`expr index $p25 $buscar` #comprueba el largo incluyendo los dos puntos (:) 
-largo_linea=`expr $largo_linea - 1` #comprueba el largo quitando los dos puntos (:)
-numero_linea=`expr substr $p25 1 $largo_linea` # recoge el numero de linea (74)
-numero_linea_p25=`expr $numero_linea + 1` # y le suma uno qudando coomo: (75)
+largo_linea=`expr index $p25 $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $p25 1 $largo_linea`
+numero_linea_p25=`expr $numero_linea + 1`
 letra=p
-numero_linea_p25_letrap=$numero_linea_p25$letra #crea 74p
+numero_linea_p25_letrap=$numero_linea_p25$letra
 letrac=c
-numero_linea_p25_letrac=$numero_linea_p25$letrac #crea 74c
-presentar_valor= sed -n $numero_linea_p25_letrap  /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini; #presenta el valor en pantalla
+numero_linea_p25_letrac=$numero_linea_p25$letrac
+presentar_valor= sed -n $numero_linea_p25_letrap  /home/pi/MMDVMHost/$DIRECTORIO;
 
-echo -n "\33[1;36m  18)\33[0m Modificar TXHang      - \33[1;33m"
-txh=`grep -n -m 1 '\<TXHang\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  18)${GRIS} Modificar TXHang      - ${AMARILLO}"
+txh=`grep -n -m 1 '\<TXHang\>' /home/pi/MMDVMHost/$DIRECTORIO`
 txh1=`expr substr $txh 5 30`
 echo -n "$txh1"
 
-echo -n "\33[1;36m        e)\33[0m Baliza      - \33[1;33m"
-cw= sed -n "31p"  /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini; #presenta el valor en pantalla
+echo -n "${CIAN}        e)${GRIS} Baliza      - ${AMARILLO}"
+cw= sed -n "31p"  /home/pi/MMDVMHost/$DIRECTORIO;
 
-echo -n "\33[1;36m  19)\33[0m Modificar Tramas      - \33[1;33m"
-lg=`grep -n -m 1 '\<DisplayLevel\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  19)${GRIS} Modificar Tramas      - ${AMARILLO}"
+lg=`grep -n -m 1 '\<DisplayLevel\>' /home/pi/MMDVMHost/$DIRECTORIO`
 lg1=`expr substr $lg 4 30`
 echo -n "$lg1"
 
-echo -n "\33[1;36m  f)\33[0m RFModeHang  - \33[1;33m"
-modehang=`grep -n -m 1 -c '\<RFModeHang\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  f)${GRIS} RFModeHang  - ${AMARILLO}"
+modehang=`grep -n -m 1 -c '\<RFModeHang\>' /home/pi/MMDVMHost/$DIRECTORIO`
 if [ $modehang = 0 ]; then
 echo "\33[1;31mEsta versión MMDVMHost no trae este parámetro"
 else
-modehang=`grep -n -m 1 '\<RFModeHang\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+modehang=`grep -n -m 1 '\<RFModeHang\>' /home/pi/MMDVMHost/$DIRECTORIO`
 modehang1=`expr substr $modehang 3 30`
 echo "$modehang1"
 fi
 
-echo -n "\33[1;36m  20)\33[0m Modificar Slot1       - \33[1;33m"
-sl=`grep -n -m 1 '\<Slot1\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  20)${GRIS} Modificar Slot1       - ${AMARILLO}"
+sl=`grep -n -m 1 '\<Slot1\>' /home/pi/MMDVMHost/$DIRECTORIO`
 sl1=`expr substr $sl 5 30`
 echo -n "$sl1"
 
-echo -n "\33[1;36m         g)\33[0m Timeout     - \33[1;33m"
-timeo=`grep -n -m 1 -c '\<Timeout\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}         g)${GRIS} Timeout     - ${AMARILLO}"
+timeo=`grep -n -m 1 -c '\<Timeout\>' /home/pi/MMDVMHost/$DIRECTORIO`
 if [ $timeo = 0 ]; then
 echo "\33[1;31mEsta versión MMDVMHost no trae este parámetro"
 else
-timeo=`grep -n -m 1 '\<Timeout\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+timeo=`grep -n -m 1 '\<Timeout\>' /home/pi/MMDVMHost/$DIRECTORIO`
 timeo1=`expr substr $timeo 3 30`
 echo "$timeo1"
 fi
 
-echo -n "\33[1;36m  21)\33[0m Tipo Pantalla Display - \33[1;33m"
-Display=`grep -n -m 1 -c '\<Display\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  21)${GRIS} Tipo Pantalla Display - ${AMARILLO}"
+Display=`grep -n -m 1 -c '\<Display\>' /home/pi/MMDVMHost/$DIRECTORIO`
 if [ $Display = 0 ]; then
 echo "\33[1;31mEsta versión MMDVMHost no trae este parámetro"
 else
-Display=`grep -n -m 1 '\<Display\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+Display=`grep -n -m 1 '\<Display\>' /home/pi/MMDVMHost/$DIRECTORIO`
 Display1=`expr substr $Display 3 30`
 echo -n "$Display1"
 fi
 
-var=`grep -n -m 1 "\[Nextion\]" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+var=`grep -n -m 1 "\[Nextion\]" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
 largo_linea=`expr index $var $buscar`
 largo_linea=`expr $largo_linea - 1`
 numero_linea=`expr substr $var 1 $largo_linea`
-numero_linea=`expr $numero_linea + 2` # y le suma uno qudando coomo: (75)
-MODEMNEXTION=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini)
+numero_linea=`expr $numero_linea + 2`
+MODEMNEXTION=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
 letra=c
 linea_sed_MN=$numero_linea$letra
 echo " ${CIAN}h) ${GRIS}Port Nextion- ${AMARILLO}$MODEMNEXTION"
 
-echo -n "\33[1;36m  22)\33[0m Version Display       - \33[1;33m"
-ScreenLayout=`grep -n -m 1 -c '\<ScreenLayout\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  22)${GRIS} Version Display       - ${AMARILLO}"
+ScreenLayout=`grep -n -m 1 -c '\<ScreenLayout\>' /home/pi/MMDVMHost/$DIRECTORIO`
 if [ $ScreenLayout = 0 ]; then
 echo "\33[1;31mEsta versión MMDVMHost no trae este parámetro"
 else
-ScreenLayout=`grep -n -m 1 '\<ScreenLayout\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+ScreenLayout=`grep -n -m 1 '\<ScreenLayout\>' /home/pi/MMDVMHost/$DIRECTORIO`
 ScreenLayout1=`expr substr $ScreenLayout 5 30`
 echo -n "$ScreenLayout1"
 fi
 
-var=`grep -n -m 1 "\[NXDN\]" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+# i) NXDN Enable=
+var=`grep -n -m 1 "\[NXDN\]" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
 largo_linea=`expr index $var $buscar`
 largo_linea=`expr $largo_linea - 1`
 numero_linea=`expr substr $var 1 $largo_linea`
-numero_linea=`expr $numero_linea + 1` # Se le suma 1 al número de linea
-NXDN=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini)
+numero_linea=`expr $numero_linea + 1`
+NXDN=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
 letra=c
 linea_sed_NXDN=$numero_linea$letra
 echo "  ${CIAN}i) ${GRIS}NXDN        - ${AMARILLO}$NXDN"
 
-echo -n "\33[1;36m  23)\33[0m Brillo Display Nextion- \33[1;33m"
-Brightness=`grep -n -m 1 -c '\<Brightness\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-if [ $Brightness = 0 ]; then
-echo "\33[1;31mEsta versión MMDVMHost no trae este parámetro"
-else
-Brightness=`grep -n -m 1 '\<Brightness\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
-Brightness1=`expr substr $Brightness 5 30`
-echo -n "$Brightness1"
-fi
-
-# j) POCSAG Enable=
-var=`grep -n -m 1 "\[POCSAG\]" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+# 23) IdleBrightness=
+var=`grep -n -m 1 "^IdleBrightness=" /home/pi/MMDVMHost/$DIRECTORIO`
 buscar=":"
 largo_linea=`expr index $var $buscar`
 largo_linea=`expr $largo_linea - 1`
 numero_linea=`expr substr $var 1 $largo_linea`
-numero_linea=`expr $numero_linea + 1` # Se le suma 1 al número de linea
-POCSAG=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini)
+IdleBrightness=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
+IdleBrightness_CORTO=`expr substr $IdleBrightness 3 22`
+letra=c
+linea_sed_IdleBrightness=$numero_linea$letra
+echo -n "  ${CIAN}23) ${GRIS}Brillo reposo Nextion - ${AMARILLO}$IdleBrightness_CORTO"
+
+# j) POCSAG Enable=
+var=`grep -n -m 1 "\[POCSAG\]" /home/pi/MMDVMHost/$DIRECTORIO`
+buscar=":"
+largo_linea=`expr index $var $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $var 1 $largo_linea`
+numero_linea=`expr $numero_linea + 1`
+POCSAG=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
 letra=c
 linea_sed_POCSAG=$numero_linea$letra
-echo "  ${CIAN} j) ${GRIS}POCSAG      - ${AMARILLO}$POCSAG"
+echo "${CIAN} j) ${GRIS}POCSAG      - ${AMARILLO}$POCSAG"
 
-echo -n "\33[1;36m  24)\33[0m Coordenada Latitud    - \33[1;33m"
-lat=`grep -n "Latitude" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+# 24) Latitude=
+echo -n "${CIAN}  24)${GRIS} Coordenada Latitud    - ${AMARILLO}"
+lat=`grep -n "Latitude" /home/pi/MMDVMHost/$DIRECTORIO`
 lat1=`expr substr $lat 4 30`
 echo "$lat1"
 
-echo -n "\33[1;36m  25)\33[0m Coordenada Longitud   - \33[1;33m"
-long=`grep -n "Longitude" /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+# 25) Longitude=
+echo -n "${CIAN}  25)${GRIS} Coordenada Longitud   - ${AMARILLO}"
+long=`grep -n "Longitude" /home/pi/MMDVMHost/$DIRECTORIO`
 long1=`expr substr $long 4 30`
 echo "$long1"
 
-echo -n "\33[1;36m  26)\33[0m Modulo D-STAR         - \33[1;33m"
-modu=`grep -n -m 1 '\<Module\>' /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini`
+echo -n "${CIAN}  26)${GRIS} Modulo D-STAR         - ${AMARILLO}"
+modu=`grep -n -m 1 '\<Module\>' /home/pi/MMDVMHost/$DIRECTORIO`
 modu1=`expr substr $modu 4 30`
-echo "$modu1"
+echo -n "$modu1"
 
-echo -n "\33[1;36m  27)\33[0m Entra reflector DMR+  - \33[1;33m"
-OPCION=`expr substr $pas 1 $largo1`
-OPCION=`expr $OPCION + 1`
-linea33port=$OPCION
-letra=p
-linea22port=$OPCION$letra
-var300port= sed -n $linea22port  /home/pi/MMDVMHost/MMDVMDMR2NXDN.ini;
+# k) Jitter=
+Jitter=`grep -n "Jitter" /home/pi/MMDVMHost/$DIRECTORIO`
+buscar=":"
+largo_linea=`expr index $Jitter $buscar`
+largo_linea=`expr $largo_linea - 1`
+numero_linea=`expr substr $Jitter 1 $largo_linea`
+Jitter=$(awk "NR==$numero_linea" /home/pi/MMDVMHost/$DIRECTORIO)
+letrac=c
+numero_linea_jiter_letrac=$numero_linea$letrac
+echo "  ${CIAN}      k) ${GRIS}Jitter      - ${AMARILLO}$Jitter"
+
+echo -n "${CIAN}  27)${GRIS} Entra reflector DMR+  - ${AMARILLO}"
+var300port= sed -n '238p'  /home/pi/MMDVMHost/$DIRECTORIO;
+echo "$var300port"
+echo ""
+echo "${CIAN}  28)${AMARILLO} Abrir fichero $DIRECTORIO para hacer cualquier cambio${AMARILLO}"
+
 
 echo "\33[1;36m  28)${BLANCO} Abrir fichero MMDVMDMR2NXDN.ini para hacer cualquier cambio\33[1;33m"
 
